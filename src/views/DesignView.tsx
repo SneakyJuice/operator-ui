@@ -1,0 +1,125 @@
+import { cn } from '@/lib/utils'
+import { Palette, ExternalLink, PenTool, Presentation } from 'lucide-react'
+
+const tools = [
+  {
+    id: 'claude-design',
+    emoji: '✦',
+    name: 'Claude Design',
+    subtitle: 'by Anthropic Labs',
+    desc: 'AI-powered wireframes, interactive prototypes, slide decks, and marketing collateral. Powered by Claude Opus 4.7. The most capable AI design tool available.',
+    features: ['Wireframes & mockups', 'Interactive prototypes', 'Slide decks (export PPTX)', 'Brand kit integration', 'Frontier code-powered prototypes'],
+    cta: 'Open Claude Design',
+    url: 'https://claude.ai/design',
+    color: '#a855f7',
+    badge: 'RECOMMENDED',
+  },
+  {
+    id: 'excalidraw',
+    emoji: '✏️',
+    name: 'Excalidraw',
+    subtitle: 'Whiteboard & Diagrams',
+    desc: 'Hand-drawn style whiteboard for architecture diagrams, flow charts, system designs, and quick wireframes. Open source and fully embedded.',
+    features: ['Architecture diagrams', 'Flow charts', 'System design sketches', 'Collaborative (share link)', 'Export PNG/SVG'],
+    cta: 'Open Whiteboard',
+    url: 'https://excalidraw.com',
+    color: '#10b981',
+    badge: 'EMBEDDED',
+  },
+  {
+    id: 'canva',
+    emoji: '🎨',
+    name: 'Canva',
+    subtitle: 'Brand Design & Presentations',
+    desc: 'Professional presentation design, social media assets, and marketing collateral with drag-and-drop simplicity and a massive template library.',
+    features: ['Presentation templates', 'Social media assets', 'Brand kit support', 'Export PDF/PPTX', 'Team collaboration'],
+    cta: 'Open Canva',
+    url: 'https://canva.com',
+    color: '#00c4cc',
+    badge: 'LINK-OUT',
+  },
+]
+
+export default function DesignView() {
+  return (
+    <div className="flex flex-col h-full p-6 overflow-y-auto">
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-[#e8e8e8]">Design Center</h2>
+        <p className="text-sm text-[#555] mt-1">Create wireframes, prototypes, slides, and visual assets</p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 max-w-4xl">
+        {tools.map(tool => (
+          <div key={tool.id}
+            className="group p-5 bg-[#111] border border-[#1e1e1e] rounded-2xl hover:border-[#2a2a2a] hover:bg-[#141414] transition-all"
+          >
+            <div className="flex items-start gap-4">
+              {/* Icon */}
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+                style={{ backgroundColor: tool.color + '15', border: `1px solid ${tool.color}30` }}
+              >
+                {tool.emoji}
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-base font-semibold text-[#e8e8e8]">{tool.name}</span>
+                  <span className="text-[9px] text-[#555]">{tool.subtitle}</span>
+                  <span
+                    className="text-[9px] px-1.5 py-0.5 rounded font-mono ml-auto"
+                    style={{ backgroundColor: tool.color + '20', color: tool.color }}
+                  >
+                    {tool.badge}
+                  </span>
+                </div>
+
+                <p className="text-xs text-[#666] leading-relaxed mb-3">{tool.desc}</p>
+
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {tool.features.map(f => (
+                    <span key={f} className="text-[10px] px-2 py-0.5 rounded-full bg-[#1a1a1a] text-[#666] border border-[#222]">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href={tool.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
+                  style={{
+                    backgroundColor: tool.color + '15',
+                    color: tool.color,
+                    border: `1px solid ${tool.color}30`,
+                  }}
+                  onMouseEnter={e => {
+                    (e.target as HTMLElement).style.backgroundColor = tool.color + '25'
+                  }}
+                  onMouseLeave={e => {
+                    (e.target as HTMLElement).style.backgroundColor = tool.color + '15'
+                  }}
+                >
+                  <ExternalLink size={12} />
+                  {tool.cta}
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tip */}
+      <div className="mt-6 p-4 bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl max-w-4xl">
+        <div className="flex items-start gap-2">
+          <Palette size={13} className="text-violet-500 mt-0.5 shrink-0" />
+          <div className="text-[11px] text-[#555] leading-relaxed">
+            <span className="text-violet-400 font-medium">Recommended workflow:</span> Start in Claude Design for AI-generated wireframes → export to Excalidraw for architecture sketches → finalize in Canva for brand-polished presentations. Claude Design can hand off directly to Claude Code for implementation.
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
