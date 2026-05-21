@@ -10,6 +10,8 @@ import IntegrationsView from '@/views/IntegrationsView'
 import PlaceholderView from '@/views/PlaceholderView'
 import ProjectsView from '@/views/ProjectsView'
 import BuildTasksView from '@/views/BuildTasksView'
+import TaskFeedView from '@/views/TaskFeedView'
+import AgentManagerView from '@/views/AgentManagerView'
 import { PanelRight, Menu } from 'lucide-react'
 import { useLiveData } from '@/lib/useLiveData'
 
@@ -31,6 +33,8 @@ export default function App() {
       case 'design':       return <DesignView />
       case 'logs':         return <PlaceholderView title="Activity Logs" desc="Real-time API call log, agent action history, and cost attribution." icon="📋" />
       case 'settings':     return <PlaceholderView title="Settings" desc="Gateway config, auth, notifications, and workspace preferences." icon="⚙️" />
+      case 'taskfeed':     return <TaskFeedView />
+      case 'agentmanager': return <AgentManagerView liveData={liveData} />
     }
   }
 

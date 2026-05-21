@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils'
-import { Palette, ExternalLink, PenTool, Presentation } from 'lucide-react'
+import { cn } from '@/lib/utils';
+import { Palette, ExternalLink, PenTool, Presentation } from 'lucide-react';
+import { useState } from 'react';
 
 const tools = [
   {
@@ -21,8 +22,6 @@ const tools = [
     subtitle: 'Whiteboard & Diagrams',
     desc: 'Hand-drawn style whiteboard for architecture diagrams, flow charts, system designs, and quick wireframes. Open source and fully embedded.',
     features: ['Architecture diagrams', 'Flow charts', 'System design sketches', 'Collaborative (share link)', 'Export PNG/SVG'],
-    cta: 'Open Whiteboard',
-    url: 'https://excalidraw.com',
     color: '#10b981',
     badge: 'EMBEDDED',
   },
@@ -41,6 +40,8 @@ const tools = [
 ]
 
 export default function DesignView() {
+  const [excalidrawOpen, setExcalidrawOpen] = useState(false);
+
   return (
     <div className="flex flex-col h-full p-6 overflow-y-auto">
       <div className="mb-6">
@@ -85,26 +86,18 @@ export default function DesignView() {
                   ))}
                 </div>
 
-                <a
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => setExcalidrawOpen(v => !v)}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
                   style={{
-                    backgroundColor: tool.color + '15',
-                    color: tool.color,
-                    border: `1px solid ${tool.color}30`,
-                  }}
-                  onMouseEnter={e => {
-                    (e.target as HTMLElement).style.backgroundColor = tool.color + '25'
-                  }}
-                  onMouseLeave={e => {
-                    (e.target as HTMLElement).style.backgroundColor = tool.color + '15'
+                    backgroundColor: '#10b98115',
+                    color: '#10b981',
+                    border: '1px solid #10b98130',
                   }}
                 >
                   <ExternalLink size={12} />
-                  {tool.cta}
-                </a>
+                  {excalidrawOpen ? 'Close Whiteboard' : 'Open Whiteboard'}
+                </button>
               </div>
             </div>
           </div>

@@ -4,12 +4,14 @@ import {
   Activity, Settings, ChevronRight, FolderKanban, CheckSquare
 } from 'lucide-react'
 
-export type NavSection = 'agents' | 'projects' | 'buildtasks' | 'channels' | 'models' | 'skills' | 'integrations' | 'design' | 'logs' | 'settings'
+export type NavSection = 'agents' | 'projects' | 'buildtasks' | 'channels' | 'models' | 'skills' | 'integrations' | 'design' | 'logs' | 'settings' | 'taskfeed' | 'agentmanager'
 
 interface SidebarProps {
   active: NavSection
   onChange: (s: NavSection) => void
 }
+
+import { LayoutList, Users } from 'lucide-react';
 
 const navItems: { id: NavSection; label: string; icon: React.FC<any>; badge?: string }[] = [
   { id: 'agents',       label: 'Agents',       icon: Bot },
@@ -22,10 +24,12 @@ const navItems: { id: NavSection; label: string; icon: React.FC<any>; badge?: st
   { id: 'design',       label: 'Design Center',icon: Palette },
   { id: 'logs',         label: 'Logs',         icon: Activity },
   { id: 'settings',     label: 'Settings',     icon: Settings },
+  { id: 'taskfeed',     label: 'Task Feed',    icon: LayoutList },
+  { id: 'agentmanager', label: 'Agent Manager',  icon: Users },
 ]
 
 // Mobile bottom nav — show only the most important 5
-const mobileNavItems = navItems.filter(i => ['agents', 'projects', 'buildtasks', 'integrations', 'settings'].includes(i.id))
+const mobileNavItems = navItems.filter(i => ['agents', 'projects', 'taskfeed', 'agentmanager', 'settings'].includes(i.id))
 
 export default function Sidebar({ active, onChange }: SidebarProps) {
   return (
