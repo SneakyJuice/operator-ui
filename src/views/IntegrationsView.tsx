@@ -41,81 +41,105 @@ const integrationNodes: IntegrationNode[] = [
   { id: 'supabase',   label: 'Supabase',         emoji: '🟩', category: 'Data',     color: '#3ecf8e', status: 'active' },
   // ── Voice / Comms
   { id: 'elevenlabs', label: 'ElevenLabs',       emoji: '🎙️', category: 'Voice',    color: '#9b59b6', status: 'active' },
+  // ── Automation
+  { id: 'n8n',        label: 'n8n',              emoji: '🔁', category: 'Automation', color: '#ea4b71', status: 'active' },
+  // ── Payments
+  { id: 'stripe',     label: 'Stripe',           emoji: '💳', category: 'Payments',  color: '#635bff', status: 'idle' },
+  { id: 'privacy',    label: 'Privacy.com',      emoji: '🔒', category: 'Payments',  color: '#00c48c', status: 'idle' },
+  // ── Analytics
+  { id: 'posthog',    label: 'PostHog',          emoji: '📊', category: 'Analytics', color: '#f54e00', status: 'active' },
+  { id: 'ga4',        label: 'GA4',              emoji: '📈', category: 'Analytics', color: '#e37400', status: 'active' },
+  { id: 'looker',     label: 'Looker Studio',    emoji: '🔭', category: 'Analytics', color: '#4285f4', status: 'idle' },
+  // ── Data / Research
+  { id: 'firecrawl',  label: 'Firecrawl',        emoji: '🔥', category: 'Data',      color: '#ff6b35', status: 'idle' },
+  { id: 'tavily',     label: 'Tavily',           emoji: '🔍', category: 'Data',      color: '#6366f1', status: 'idle' },
+  // ── Scheduling
+  { id: 'calcom',     label: 'Cal.com',          emoji: '📅', category: 'Tool',      color: '#292929', status: 'idle' },
   // ── Infra / Deploy
   { id: 'github',     label: 'GitHub',           emoji: '🐙', category: 'Infra',    color: '#94a3b8', status: 'idle' },
   { id: 'vercel',     label: 'Vercel',           emoji: '▲',  category: 'Infra',    color: '#e8e8e8', status: 'idle' },
+  { id: 'cloudflare', label: 'Cloudflare',       emoji: '🌐', category: 'Infra',    color: '#f6821f', status: 'active' },
+  { id: 'digitalocean',label: 'Digital Ocean',   emoji: '🌊', category: 'Infra',    color: '#0080ff', status: 'active' },
+  { id: 'tailscale',  label: 'Tailscale',        emoji: '🔗', category: 'Infra',    color: '#5b5ea6', status: 'active' },
   // ── Memory
   { id: 'mem0',       label: 'Mem0',             emoji: '💾', category: 'Memory',   color: '#84cc16', status: 'active' },
   { id: 'qdrant',     label: 'Qdrant',           emoji: '🗄️', category: 'Infra',    color: '#06b6d4', status: 'active' },
 ]
 
-// Layout: Zion at center, clusters radiating outward
-// Center: Zion (hub)
-// Left:   Surfaces (Atlas, Ark) + Memory (Mem0, Qdrant)
-// Right:  AI models (OpenRouter, Claude, Qwen, Gemini)
-// Top:    Infra (GitHub, Vercel)
-// Bottom: Tools + Data + Comms
+// 33-node layout — Zion at center, clusters by category
 const positions: Record<string, { x: number; y: number }> = {
-  // Hub
-  zion:       { x: 500, y: 280 },
-  // Surfaces — left
-  atlas:      { x: 220, y: 140 },
-  ark:        { x: 220, y: 420 },
-  // AI — right cluster
-  openrouter: { x: 780, y: 280 },
-  claude:     { x: 1020, y: 140 },
-  qwen:       { x: 1020, y: 280 },
-  gemini:     { x: 1020, y: 420 },
-  // Infra — top
-  github:     { x: 500, y: 60 },
-  vercel:     { x: 700, y: 60 },
-  // Memory — left-mid
-  mem0:       { x: 220, y: 280 },
-  qdrant:     { x: 60,  y: 280 },
-  // Tools — bottom-left
-  clickup:    { x: 160, y: 560 },
-  gws:        { x: 340, y: 620 },
-  miro:       { x: 500, y: 560 },
-  // Data / Enrichment — bottom-mid
-  apollo:     { x: 660, y: 560 },
-  apify:      { x: 820, y: 560 },
-  supabase:   { x: 660, y: 440 },
-  // Channels — bottom-right
-  telegram:   { x: 500, y: 420 },
-  twilio:     { x: 340, y: 480 },
-  // Voice
-  elevenlabs: { x: 980, y: 560 },
+  // ── Hub
+  zion:         { x: 600, y: 360 },
+  // ── Surfaces — upper left
+  atlas:        { x: 340, y: 200 },
+  ark:          { x: 340, y: 440 },
+  // ── Memory — far left
+  mem0:         { x: 120, y: 300 },
+  qdrant:       { x: 120, y: 440 },
+  // ── AI — right spoke
+  openrouter:   { x: 860, y: 360 },
+  claude:       { x: 1080, y: 200 },
+  qwen:         { x: 1080, y: 360 },
+  gemini:       { x: 1080, y: 520 },
+  // ── Infra — top arc
+  digitalocean: { x: 380, y: 60 },
+  tailscale:    { x: 540, y: 60 },
+  cloudflare:   { x: 700, y: 60 },
+  github:       { x: 860, y: 60 },
+  vercel:       { x: 1020, y: 60 },
+  // ── Channels — lower left
+  telegram:     { x: 380, y: 580 },
+  twilio:       { x: 220, y: 580 },
+  // ── Tools — bottom center-left
+  clickup:      { x: 460, y: 660 },
+  gws:          { x: 600, y: 720 },
+  miro:         { x: 740, y: 660 },
+  calcom:       { x: 340, y: 720 },
+  // ── Data / Enrichment — bottom center-right
+  apollo:       { x: 860, y: 580 },
+  apify:        { x: 980, y: 660 },
+  supabase:     { x: 740, y: 500 },
+  firecrawl:    { x: 980, y: 500 },
+  tavily:       { x: 1100, y: 580 },
+  // ── Automation
+  n8n:          { x: 460, y: 500 },
+  // ── Voice
+  elevenlabs:   { x: 860, y: 720 },
+  // ── Payments
+  stripe:       { x: 200, y: 460 },
+  privacy:      { x: 120, y: 580 },
+  // ── Analytics
+  posthog:      { x: 740, y: 780 },
+  ga4:          { x: 600, y: 840 },
+  looker:       { x: 860, y: 840 },
 }
 
 const connections: [string, string][] = [
   // Surfaces
-  ['zion', 'atlas'],
-  ['zion', 'ark'],
+  ['zion', 'atlas'], ['zion', 'ark'],
   // AI routing
   ['zion', 'openrouter'],
-  ['openrouter', 'claude'],
-  ['openrouter', 'qwen'],
-  ['openrouter', 'gemini'],
+  ['openrouter', 'claude'], ['openrouter', 'qwen'], ['openrouter', 'gemini'],
   // Memory
-  ['zion', 'mem0'],
-  ['mem0', 'qdrant'],
-  ['zion', 'qdrant'],
+  ['zion', 'mem0'], ['mem0', 'qdrant'], ['zion', 'qdrant'],
   // Infra
-  ['zion', 'github'],
-  ['github', 'vercel'],
+  ['zion', 'digitalocean'], ['zion', 'tailscale'], ['zion', 'cloudflare'],
+  ['zion', 'github'], ['github', 'vercel'],
   // Channels
-  ['zion', 'telegram'],
-  ['zion', 'twilio'],
+  ['zion', 'telegram'], ['zion', 'twilio'],
   // Tools
-  ['zion', 'clickup'],
-  ['zion', 'gws'],
-  ['zion', 'miro'],
-  // Data / Enrichment
-  ['zion', 'apollo'],
-  ['zion', 'apify'],
-  ['zion', 'supabase'],
+  ['zion', 'clickup'], ['zion', 'gws'], ['zion', 'miro'], ['zion', 'calcom'],
+  // Data
+  ['zion', 'apollo'], ['zion', 'apify'], ['zion', 'supabase'],
+  ['zion', 'firecrawl'], ['zion', 'tavily'],
+  // Automation
+  ['zion', 'n8n'],
   // Voice
   ['zion', 'elevenlabs'],
+  // Payments
+  ['zion', 'stripe'], ['zion', 'privacy'],
+  // Analytics
+  ['zion', 'posthog'], ['zion', 'ga4'], ['zion', 'looker'],
 ]
 
 // Edge color when idle vs active
@@ -191,41 +215,60 @@ interface PulseEvent {
 }
 
 const seedEvents: PulseEvent[] = [
-  { id: 's1',  from: 'zion',       to: 'openrouter',  label: 'LLM request → claude-sonnet-4-6',    ts: '21:21:03' },
-  { id: 's2',  from: 'zion',       to: 'clickup',     label: 'POST /task — P1 created',             ts: '21:20:45' },
-  { id: 's3',  from: 'zion',       to: 'telegram',    label: 'sendMessage → Build Room',             ts: '21:20:12' },
-  { id: 's4',  from: 'mem0',       to: 'qdrant',      label: 'vector search — memory recall',        ts: '21:19:55' },
-  { id: 's5',  from: 'zion',       to: 'gws',         label: 'calendar.list — morning brief',        ts: '21:19:30' },
-  { id: 's6',  from: 'openrouter', to: 'claude',      label: 'Routing → claude-sonnet-4-6',          ts: '21:18:44' },
-  { id: 's7',  from: 'zion',       to: 'github',      label: 'git push — operator-ui main',          ts: '21:17:58' },
-  { id: 's8',  from: 'github',     to: 'vercel',      label: 'deploy triggered — v1.1',              ts: '21:17:59' },
-  { id: 's9',  from: 'zion',       to: 'apollo',      label: 'people.search — 50 leads enriched',    ts: '21:16:22' },
-  { id: 's10', from: 'zion',       to: 'supabase',    label: 'SELECT clinics — 1054 rows',           ts: '21:15:44' },
-  { id: 's11', from: 'zion',       to: 'elevenlabs',  label: 'TTS synthesis — Lamin voice',          ts: '21:14:30' },
-  { id: 's12', from: 'zion',       to: 'apify',       label: 'actor.run → tweet-scraper-v2',         ts: '21:13:10' },
+  { id: 's1',  from: 'zion',        to: 'openrouter',   label: 'LLM request → claude-sonnet-4-6',       ts: '21:21:03' },
+  { id: 's2',  from: 'zion',        to: 'clickup',      label: 'POST /task — P1 created',                ts: '21:20:45' },
+  { id: 's3',  from: 'zion',        to: 'telegram',     label: 'sendMessage → Build Room',                ts: '21:20:12' },
+  { id: 's4',  from: 'mem0',        to: 'qdrant',       label: 'vector search — memory recall',           ts: '21:19:55' },
+  { id: 's5',  from: 'zion',        to: 'gws',          label: 'calendar.list — morning brief',           ts: '21:19:30' },
+  { id: 's6',  from: 'openrouter',  to: 'claude',       label: 'Routing → claude-sonnet-4-6',             ts: '21:18:44' },
+  { id: 's7',  from: 'zion',        to: 'github',       label: 'git push — operator-ui main',             ts: '21:17:58' },
+  { id: 's8',  from: 'github',      to: 'vercel',       label: 'deploy triggered — v1.2',                 ts: '21:17:59' },
+  { id: 's9',  from: 'zion',        to: 'apollo',       label: 'people.search — 50 leads enriched',       ts: '21:16:22' },
+  { id: 's10', from: 'zion',        to: 'supabase',     label: 'SELECT clinics — 1054 rows',              ts: '21:15:44' },
+  { id: 's11', from: 'zion',        to: 'elevenlabs',   label: 'TTS synthesis — Lamin voice',             ts: '21:14:30' },
+  { id: 's12', from: 'zion',        to: 'apify',        label: 'actor.run → tweet-scraper-v2',            ts: '21:13:10' },
+  { id: 's13', from: 'zion',        to: 'n8n',          label: 'workflow.trigger — lead-enrichment',      ts: '21:12:44' },
+  { id: 's14', from: 'zion',        to: 'cloudflare',   label: 'DNS check — operator.sovereign-hq.com',  ts: '21:12:01' },
+  { id: 's15', from: 'zion',        to: 'tailscale',    label: 'peer.ping — atlas 100.78.163.113',        ts: '21:11:30' },
+  { id: 's16', from: 'zion',        to: 'posthog',      label: 'event.capture — page_view GlowRoute',    ts: '21:10:55' },
+  { id: 's17', from: 'zion',        to: 'stripe',       label: 'payment.intent — $249 plan',              ts: '21:09:20' },
+  { id: 's18', from: 'zion',        to: 'digitalocean', label: 'droplet.status — healthy 99.9%',          ts: '21:08:44' },
+  { id: 's19', from: 'zion',        to: 'firecrawl',    label: 'scrape — competitor landing page',        ts: '21:07:30' },
+  { id: 's20', from: 'zion',        to: 'tavily',       label: 'search — AI automation trends 2026',     ts: '21:06:15' },
 ]
 
 const samplePulses = [
-  ['zion',       'openrouter', 'LLM call → claude-sonnet-4-6'],
-  ['zion',       'telegram',   'sendMessage → Build Room'],
-  ['zion',       'clickup',    'Task update — P1 in progress'],
-  ['mem0',       'qdrant',     'vector search — memory recall'],
-  ['zion',       'gws',        'calendar.list — next 24h'],
-  ['openrouter', 'claude',     'Routing → Claude Sonnet 4.6'],
-  ['openrouter', 'qwen',       'Routing → Qwen3-235b'],
-  ['zion',       'atlas',      'SSH dispatch → atlas executor'],
-  ['zion',       'github',     'git push — operator-ui main'],
-  ['github',     'vercel',     'Vercel deploy triggered'],
-  ['zion',       'apollo',     'POST /people/search — 50 leads'],
-  ['zion',       'apify',      'Actor run → tweet-scraper-v2'],
-  ['zion',       'supabase',   'SELECT clinics WHERE active=true'],
-  ['zion',       'elevenlabs', 'TTS → Lamin voice — morning brief'],
-  ['zion',       'twilio',     'SMS alert → +1813xxxxxx'],
-  ['zion',       'miro',       'board.create — sprint planning'],
-  ['zion',       'mem0',       'memory.add — new preference stored'],
-  ['zion',       'qdrant',     'vector upsert — session embedding'],
-  ['zion',       'ark',        'task dispatch → ark executor'],
-  ['zion',       'gws',        'gmail.search — is:unread urgent'],
+  ['zion',       'openrouter',   'LLM call → claude-sonnet-4-6'],
+  ['zion',       'telegram',     'sendMessage → Build Room'],
+  ['zion',       'clickup',      'Task update — P1 in progress'],
+  ['mem0',       'qdrant',       'vector search — memory recall'],
+  ['zion',       'gws',          'calendar.list — next 24h'],
+  ['openrouter', 'claude',       'Routing → Claude Sonnet 4.6'],
+  ['openrouter', 'qwen',         'Routing → Qwen3-235b'],
+  ['zion',       'atlas',        'SSH dispatch → atlas executor'],
+  ['zion',       'github',       'git push — operator-ui main'],
+  ['github',     'vercel',       'deploy triggered — v1.2'],
+  ['zion',       'apollo',       'people.search — 50 leads enriched'],
+  ['zion',       'apify',        'actor.run → tweet-scraper-v2'],
+  ['zion',       'supabase',     'SELECT clinics WHERE active=true'],
+  ['zion',       'elevenlabs',   'TTS → Lamin voice — morning brief'],
+  ['zion',       'twilio',       'SMS alert → +1813xxxxxx'],
+  ['zion',       'miro',         'board.create — sprint planning'],
+  ['zion',       'mem0',         'memory.add — preference stored'],
+  ['zion',       'qdrant',       'vector upsert — session embedding'],
+  ['zion',       'ark',          'task dispatch → ark executor'],
+  ['zion',       'n8n',          'workflow.trigger — lead-enrichment'],
+  ['zion',       'stripe',       'payment.intent — $249 plan'],
+  ['zion',       'posthog',      'event.capture — page_view GlowRoute'],
+  ['zion',       'ga4',          'report.query — 7d organic traffic'],
+  ['zion',       'cloudflare',   'DNS check — operator.sovereign-hq.com'],
+  ['zion',       'firecrawl',    'scrape — glowroute competitor page'],
+  ['zion',       'tavily',       'search — AI automation trends 2026'],
+  ['zion',       'digitalocean', 'droplet.status — healthy 99.9%'],
+  ['zion',       'tailscale',    'peer.ping — atlas 100.78.163.113'],
+  ['zion',       'calcom',       'booking.create — demo slot reserved'],
+  ['zion',       'privacy',      'card.create — SINGLE_USE $249'],
+  ['zion',       'looker',       'dashboard.refresh — GlowRoute KPIs'],
 ]
 
 export default function IntegrationsView() {
