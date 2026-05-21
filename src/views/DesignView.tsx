@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Palette, ExternalLink, PenTool, Presentation } from 'lucide-react';
+import { Palette, ExternalLink, Link, X } from 'lucide-react';
 import { useState } from 'react';
 
 const tools = [
@@ -16,13 +16,13 @@ const tools = [
     badge: 'RECOMMENDED',
   },
   {
-    id: 'excalidraw',
-    emoji: '✏️',
-    name: 'Excalidraw',
-    subtitle: 'Whiteboard & Diagrams',
-    desc: 'Hand-drawn style whiteboard for architecture diagrams, flow charts, system designs, and quick wireframes. Open source and fully embedded.',
-    features: ['Architecture diagrams', 'Flow charts', 'System design sketches', 'Collaborative (share link)', 'Export PNG/SVG'],
-    color: '#10b981',
+    id: 'miro',
+    emoji: '🟡',
+    name: 'Miro',
+    subtitle: 'Collaborative Whiteboard',
+    desc: 'Real-time collaborative whiteboard for sprint planning, architecture diagrams, and system design. Paste your board URL to embed it directly.',
+    features: ['Sprint planning', 'Architecture diagrams', 'Real-time collaboration', 'Sticky notes & flows', 'Export PNG/PDF'],
+    color: '#ECAB23',
     badge: 'EMBEDDED',
   },
   {
@@ -39,8 +39,15 @@ const tools = [
   },
 ]
 
+const MIRO_STORAGE_KEY = 'operator_miro_board_url'
+
 export default function DesignView() {
-  const [excalidrawOpen, setExcalidrawOpen] = useState(false);
+  const [miroUrl, setMiroUrl] = useState<string>(
+    () => localStorage.getItem(MIRO_STORAGE_KEY) || ''
+  )
+  const [miroInput, setMiroInput] = useState('')
+  const [miroOpen, setMiroOpen] = useState(false)
+  const [editingMiro, setEditingMiro] = useState(false)
 
   return (
     <div className="flex flex-col h-full p-6 overflow-y-auto">
@@ -86,18 +93,80 @@ export default function DesignView() {
                   ))}
                 </div>
 
-                <button
-                  onClick={() => setExcalidrawOpen(v => !v)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
-                  style={{
-                    backgroundColor: '#10b98115',
-                    color: '#10b981',
-                    border: '1px solid #10b98130',
-                  }}
-                >
-                  <ExternalLink size={12} />
-                  {excalidrawOpen ? 'Close Whiteboard' : 'Open Whiteboard'}
-                </button>
+                {tool.id === 'miro' ? (
+                  <div className="space-y-3">
+                    {/* URL input */}
+                    {(editingMiro || !miroUrl) ? (
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={miroInput}
+                          onChange={e => setMiroInput(e.target.value)}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' && miroInput.trim()) {
+                              const url = miroInput.trim()
+                              setMiroUrl(url)
+                              localStorage.setItem(MIRO_STORAGE_KEY, url)
+                              setMiroInput('')
+                              setEditingMiro(false)
+                              setMiroOpen(true)
+                            }
+                          }}
+                          placeholder="Paste Miro board URL and press Enter…"
+                          className="flex-1 px-3 py-1.5 bg-[#071820] border border-[#1a4a62] rounded-lg text-xs text-[#e8e8e8] placeholder-[#4a7a94] focus:outline-none focus:border-[#ECAB23]"
+                        />
+                        {miroUrl && (
+                          <button
+                            onClick={() => setEditingMiro(false)}
+                            className="text-[#4a7a94] hover:text-[#8aacbc] text-xs"
+                          >
+                            <X size={14} />
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setMiroOpen(v => !v)}
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
+                          style={{ backgroundColor: '#ECAB2315', color: '#ECAB23', border: '1px solid #ECAB2330' }}
+                        >
+                          <Link size={12} />
+                          {miroOpen ? 'Close Board' : 'Open Board'}
+                        </button>
+                        <button
+                          onClick={() => { setMiroInput(miroUrl); setEditingMiro(true) }}
+                          className="text-[10px] text-[#4a7a94] hover:text-[#8aacbc] underline"
+                        >
+                          change URL
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Embedded board */}
+                    {miroOpen && miroUrl && (
+                      <div className="rounded-xl overflow-hidden border border-[#1a4a62] mt-3" style={{ height: '600px' }}>
+                        <iframe
+                          src={miroUrl}
+                          className="w-full h-full"
+                          title="Miro Board"
+                          allow="fullscreen; clipboard-read; clipboard-write"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ) : tool.url ? (
+                  <a
+                    href={tool.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all"
+                    style={{ backgroundColor: tool.color + '15', color: tool.color, border: `1px solid ${tool.color}30` }}
+                  >
+                    <ExternalLink size={12} />
+                    {tool.cta}
+                  </a>
+                ) : null}
               </div>
             </div>
           </div>
