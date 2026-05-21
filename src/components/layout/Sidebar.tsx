@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils'
 import {
   Bot, Cpu, MessageSquare, Zap, BookOpen, Palette,
-  Activity, Settings, ChevronRight
+  Activity, Settings, ChevronRight, FolderKanban
 } from 'lucide-react'
 
-export type NavSection = 'agents' | 'channels' | 'models' | 'skills' | 'integrations' | 'design' | 'logs' | 'settings'
+export type NavSection = 'agents' | 'channels' | 'models' | 'skills' | 'integrations' | 'design' | 'logs' | 'settings' | 'projects'
 
 interface SidebarProps {
   active: NavSection
@@ -13,6 +13,7 @@ interface SidebarProps {
 
 const navItems: { id: NavSection; label: string; icon: React.FC<any>; badge?: string }[] = [
   { id: 'agents',       label: 'Agents',       icon: Bot },
+  { id: 'projects',     label: 'Projects',      icon: FolderKanban },
   { id: 'channels',     label: 'Channels',      icon: MessageSquare },
   { id: 'models',       label: 'Models',        icon: Cpu },
   { id: 'skills',       label: 'Skills',        icon: BookOpen },
@@ -24,12 +25,12 @@ const navItems: { id: NavSection; label: string; icon: React.FC<any>; badge?: st
 
 export default function Sidebar({ active, onChange }: SidebarProps) {
   return (
-    <aside className="flex flex-col h-full bg-[#111111] border-r border-[#1e1e1e] w-[220px] shrink-0">
+    <aside className="flex flex-col h-full bg-[#0E3846] border-r border-[#1a4a62] w-[220px] shrink-0">
       {/* Logo */}
       <div className="flex items-center gap-2 px-4 py-4 border-b border-[#1e1e1e]">
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center text-xs font-bold">S</div>
+        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#ECAB23] to-[#f0c050] flex items-center justify-center text-xs font-bold">S</div>
         <div>
-          <div className="text-xs font-semibold text-white leading-none">Sovereign HQ</div>
+          <div className="text-xs font-semibold text-[#071820] leading-none">Sovereign HQ</div>
           <div className="text-[10px] text-[#555] leading-none mt-0.5">Operator Platform</div>
         </div>
       </div>
