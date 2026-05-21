@@ -19,46 +19,103 @@ interface IntegrationNode {
 }
 
 const integrationNodes: IntegrationNode[] = [
-  { id: 'zion',       label: 'Zion',             emoji: '⚡', category: 'Surface', color: '#ECAB23', status: 'active' },
-  { id: 'atlas',      label: 'Atlas',            emoji: '🔵', category: 'Surface', color: '#3b82f6', status: 'idle' },
-  { id: 'ark',        label: 'Ark',              emoji: '🟣', category: 'Surface', color: '#6366f1', status: 'offline' },
-  { id: 'openrouter', label: 'OpenRouter',       emoji: '🔀', category: 'AI',      color: '#f59e0b', status: 'active' },
-  { id: 'claude',     label: 'Claude',           emoji: '✦',  category: 'AI',      color: '#a855f7', status: 'idle' },
-  { id: 'qwen',       label: 'Qwen3-235b',       emoji: '🧠', category: 'AI',      color: '#10b981', status: 'idle' },
-  { id: 'gemini',     label: 'Gemini Flash',     emoji: '💡', category: 'AI',      color: '#f97316', status: 'idle' },
-  { id: 'telegram',   label: 'Telegram',         emoji: '✈️', category: 'Channel', color: '#0ea5e9', status: 'active' },
-  { id: 'clickup',    label: 'ClickUp',          emoji: '✅', category: 'Tool',    color: '#7c3aed', status: 'active' },
-  { id: 'gws',        label: 'Google Workspace', emoji: '📁', category: 'Tool',    color: '#ef4444', status: 'active' },
-  { id: 'vercel',     label: 'Vercel',           emoji: '▲',  category: 'Infra',   color: '#e8e8e8', status: 'idle' },
-  { id: 'qdrant',     label: 'Qdrant',           emoji: '🗄️', category: 'Infra',   color: '#06b6d4', status: 'active' },
-  { id: 'mem0',       label: 'Mem0',             emoji: '💾', category: 'Memory',  color: '#84cc16', status: 'active' },
-  { id: 'github',     label: 'GitHub',           emoji: '🐙', category: 'Infra',   color: '#94a3b8', status: 'idle' },
+  // ── Surfaces (center cluster)
+  { id: 'zion',       label: 'Zion',             emoji: '⚡', category: 'Surface',  color: '#ECAB23', status: 'active' },
+  { id: 'atlas',      label: 'Atlas',            emoji: '🔵', category: 'Surface',  color: '#3b82f6', status: 'idle' },
+  { id: 'ark',        label: 'Ark',              emoji: '🟣', category: 'Surface',  color: '#6366f1', status: 'offline' },
+  // ── AI / Models
+  { id: 'openrouter', label: 'OpenRouter',       emoji: '🔀', category: 'AI',       color: '#f59e0b', status: 'active' },
+  { id: 'claude',     label: 'Claude',           emoji: '✦',  category: 'AI',       color: '#a855f7', status: 'idle' },
+  { id: 'qwen',       label: 'Qwen3-235b',       emoji: '🧠', category: 'AI',       color: '#10b981', status: 'idle' },
+  { id: 'gemini',     label: 'Gemini Flash',     emoji: '💡', category: 'AI',       color: '#f97316', status: 'idle' },
+  // ── Channels
+  { id: 'telegram',   label: 'Telegram',         emoji: '✈️', category: 'Channel',  color: '#0ea5e9', status: 'active' },
+  { id: 'twilio',     label: 'Twilio',           emoji: '📱', category: 'Channel',  color: '#f22f46', status: 'idle' },
+  // ── Productivity tools
+  { id: 'clickup',    label: 'ClickUp',          emoji: '✅', category: 'Tool',     color: '#7c3aed', status: 'active' },
+  { id: 'gws',        label: 'Google Workspace', emoji: '📁', category: 'Tool',     color: '#ef4444', status: 'active' },
+  { id: 'miro',       label: 'Miro',             emoji: '🖼️', category: 'Tool',     color: '#ffd02f', status: 'idle' },
+  // ── Data / Enrichment
+  { id: 'apollo',     label: 'Apollo.io',        emoji: '🚀', category: 'Data',     color: '#00c2ff', status: 'active' },
+  { id: 'apify',      label: 'Apify',            emoji: '🕷️', category: 'Data',     color: '#ff9012', status: 'idle' },
+  { id: 'supabase',   label: 'Supabase',         emoji: '🟩', category: 'Data',     color: '#3ecf8e', status: 'active' },
+  // ── Voice / Comms
+  { id: 'elevenlabs', label: 'ElevenLabs',       emoji: '🎙️', category: 'Voice',    color: '#9b59b6', status: 'active' },
+  // ── Infra / Deploy
+  { id: 'github',     label: 'GitHub',           emoji: '🐙', category: 'Infra',    color: '#94a3b8', status: 'idle' },
+  { id: 'vercel',     label: 'Vercel',           emoji: '▲',  category: 'Infra',    color: '#e8e8e8', status: 'idle' },
+  // ── Memory
+  { id: 'mem0',       label: 'Mem0',             emoji: '💾', category: 'Memory',   color: '#84cc16', status: 'active' },
+  { id: 'qdrant',     label: 'Qdrant',           emoji: '🗄️', category: 'Infra',    color: '#06b6d4', status: 'active' },
 ]
 
+// Layout: Zion at center, clusters radiating outward
+// Center: Zion (hub)
+// Left:   Surfaces (Atlas, Ark) + Memory (Mem0, Qdrant)
+// Right:  AI models (OpenRouter, Claude, Qwen, Gemini)
+// Top:    Infra (GitHub, Vercel)
+// Bottom: Tools + Data + Comms
 const positions: Record<string, { x: number; y: number }> = {
-  zion:       { x: 360, y: 200 },
-  atlas:      { x: 120, y: 80 },
-  ark:        { x: 120, y: 320 },
-  openrouter: { x: 600, y: 200 },
-  claude:     { x: 820, y: 80 },
-  qwen:       { x: 820, y: 200 },
-  gemini:     { x: 820, y: 320 },
-  telegram:   { x: 360, y: 420 },
-  clickup:    { x: 120, y: 480 },
-  gws:        { x: 360, y: 540 },
-  vercel:     { x: 600, y: 480 },
-  qdrant:     { x: 600, y: 380 },
-  mem0:       { x: 120, y: 200 },
-  github:     { x: 600, y: 60 },
+  // Hub
+  zion:       { x: 500, y: 280 },
+  // Surfaces — left
+  atlas:      { x: 220, y: 140 },
+  ark:        { x: 220, y: 420 },
+  // AI — right cluster
+  openrouter: { x: 780, y: 280 },
+  claude:     { x: 1020, y: 140 },
+  qwen:       { x: 1020, y: 280 },
+  gemini:     { x: 1020, y: 420 },
+  // Infra — top
+  github:     { x: 500, y: 60 },
+  vercel:     { x: 700, y: 60 },
+  // Memory — left-mid
+  mem0:       { x: 220, y: 280 },
+  qdrant:     { x: 60,  y: 280 },
+  // Tools — bottom-left
+  clickup:    { x: 160, y: 560 },
+  gws:        { x: 340, y: 620 },
+  miro:       { x: 500, y: 560 },
+  // Data / Enrichment — bottom-mid
+  apollo:     { x: 660, y: 560 },
+  apify:      { x: 820, y: 560 },
+  supabase:   { x: 660, y: 440 },
+  // Channels — bottom-right
+  telegram:   { x: 500, y: 420 },
+  twilio:     { x: 340, y: 480 },
+  // Voice
+  elevenlabs: { x: 980, y: 560 },
 }
 
 const connections: [string, string][] = [
-  ['zion', 'atlas'], ['zion', 'ark'], ['zion', 'openrouter'],
-  ['zion', 'telegram'], ['zion', 'clickup'], ['zion', 'gws'],
-  ['openrouter', 'claude'], ['openrouter', 'qwen'], ['openrouter', 'gemini'],
-  ['zion', 'mem0'], ['mem0', 'qdrant'],
-  ['zion', 'github'], ['github', 'vercel'],
+  // Surfaces
+  ['zion', 'atlas'],
+  ['zion', 'ark'],
+  // AI routing
+  ['zion', 'openrouter'],
+  ['openrouter', 'claude'],
+  ['openrouter', 'qwen'],
+  ['openrouter', 'gemini'],
+  // Memory
+  ['zion', 'mem0'],
+  ['mem0', 'qdrant'],
   ['zion', 'qdrant'],
+  // Infra
+  ['zion', 'github'],
+  ['github', 'vercel'],
+  // Channels
+  ['zion', 'telegram'],
+  ['zion', 'twilio'],
+  // Tools
+  ['zion', 'clickup'],
+  ['zion', 'gws'],
+  ['zion', 'miro'],
+  // Data / Enrichment
+  ['zion', 'apollo'],
+  ['zion', 'apify'],
+  ['zion', 'supabase'],
+  // Voice
+  ['zion', 'elevenlabs'],
 ]
 
 // Edge color when idle vs active
@@ -134,27 +191,41 @@ interface PulseEvent {
 }
 
 const seedEvents: PulseEvent[] = [
-  { id: 's1', from: 'zion',      to: 'openrouter', label: 'LLM request → claude-sonnet-4-6', ts: '21:21:03' },
-  { id: 's2', from: 'zion',      to: 'clickup',    label: 'POST /task — P0 created',          ts: '21:20:45' },
-  { id: 's3', from: 'zion',      to: 'telegram',   label: 'sendMessage → Build Room',          ts: '21:20:12' },
-  { id: 's4', from: 'mem0',      to: 'qdrant',     label: 'vector search — memory recall',     ts: '21:19:55' },
-  { id: 's5', from: 'zion',      to: 'gws',        label: 'calendar.list — morning brief',     ts: '21:19:30' },
-  { id: 's6', from: 'openrouter',to: 'claude',     label: 'Routing → claude-sonnet-4-6',       ts: '21:18:44' },
-  { id: 's7', from: 'zion',      to: 'github',     label: 'push — operator-ui main',           ts: '21:17:58' },
-  { id: 's8', from: 'github',    to: 'vercel',     label: 'deploy triggered — v1.1',           ts: '21:17:59' },
+  { id: 's1',  from: 'zion',       to: 'openrouter',  label: 'LLM request → claude-sonnet-4-6',    ts: '21:21:03' },
+  { id: 's2',  from: 'zion',       to: 'clickup',     label: 'POST /task — P1 created',             ts: '21:20:45' },
+  { id: 's3',  from: 'zion',       to: 'telegram',    label: 'sendMessage → Build Room',             ts: '21:20:12' },
+  { id: 's4',  from: 'mem0',       to: 'qdrant',      label: 'vector search — memory recall',        ts: '21:19:55' },
+  { id: 's5',  from: 'zion',       to: 'gws',         label: 'calendar.list — morning brief',        ts: '21:19:30' },
+  { id: 's6',  from: 'openrouter', to: 'claude',      label: 'Routing → claude-sonnet-4-6',          ts: '21:18:44' },
+  { id: 's7',  from: 'zion',       to: 'github',      label: 'git push — operator-ui main',          ts: '21:17:58' },
+  { id: 's8',  from: 'github',     to: 'vercel',      label: 'deploy triggered — v1.1',              ts: '21:17:59' },
+  { id: 's9',  from: 'zion',       to: 'apollo',      label: 'people.search — 50 leads enriched',    ts: '21:16:22' },
+  { id: 's10', from: 'zion',       to: 'supabase',    label: 'SELECT clinics — 1054 rows',           ts: '21:15:44' },
+  { id: 's11', from: 'zion',       to: 'elevenlabs',  label: 'TTS synthesis — Lamin voice',          ts: '21:14:30' },
+  { id: 's12', from: 'zion',       to: 'apify',       label: 'actor.run → tweet-scraper-v2',         ts: '21:13:10' },
 ]
 
 const samplePulses = [
-  ['zion', 'openrouter', 'LLM call → claude-sonnet-4-6'],
-  ['zion', 'telegram',   'sendMessage → Build Room'],
-  ['zion', 'clickup',    'Task update — P1 in progress'],
-  ['mem0', 'qdrant',     'vector search — memory recall'],
-  ['zion', 'gws',        'calendar.list — next 24h'],
-  ['openrouter', 'claude',  'Routing → Claude Sonnet'],
-  ['openrouter', 'qwen',    'Routing → Qwen3-235b'],
-  ['zion', 'atlas',         'SSH dispatch → atlas executor'],
-  ['zion', 'github',        'git push — operator-ui'],
-  ['github', 'vercel',      'Vercel deploy triggered'],
+  ['zion',       'openrouter', 'LLM call → claude-sonnet-4-6'],
+  ['zion',       'telegram',   'sendMessage → Build Room'],
+  ['zion',       'clickup',    'Task update — P1 in progress'],
+  ['mem0',       'qdrant',     'vector search — memory recall'],
+  ['zion',       'gws',        'calendar.list — next 24h'],
+  ['openrouter', 'claude',     'Routing → Claude Sonnet 4.6'],
+  ['openrouter', 'qwen',       'Routing → Qwen3-235b'],
+  ['zion',       'atlas',      'SSH dispatch → atlas executor'],
+  ['zion',       'github',     'git push — operator-ui main'],
+  ['github',     'vercel',     'Vercel deploy triggered'],
+  ['zion',       'apollo',     'POST /people/search — 50 leads'],
+  ['zion',       'apify',      'Actor run → tweet-scraper-v2'],
+  ['zion',       'supabase',   'SELECT clinics WHERE active=true'],
+  ['zion',       'elevenlabs', 'TTS → Lamin voice — morning brief'],
+  ['zion',       'twilio',     'SMS alert → +1813xxxxxx'],
+  ['zion',       'miro',       'board.create — sprint planning'],
+  ['zion',       'mem0',       'memory.add — new preference stored'],
+  ['zion',       'qdrant',     'vector upsert — session embedding'],
+  ['zion',       'ark',        'task dispatch → ark executor'],
+  ['zion',       'gws',        'gmail.search — is:unread urgent'],
 ]
 
 export default function IntegrationsView() {
