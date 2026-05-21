@@ -11,10 +11,13 @@ import PlaceholderView from '@/views/PlaceholderView'
 import ProjectsView from '@/views/ProjectsView'
 import BuildTasksView from '@/views/BuildTasksView'
 import { PanelRight, Menu } from 'lucide-react'
+import { useLiveData } from '@/lib/useLiveData'
 
 export default function App() {
   const [section, setSection] = useState<NavSection>('agents')
   const [inspectorOpen, setInspectorOpen] = useState(false)
+
+  const liveData = useLiveData(30000)
 
   const renderMain = () => {
     switch (section) {
@@ -74,13 +77,13 @@ export default function App() {
 
         {/* Inspector — hidden on mobile unless toggled */}
         <div className={`${inspectorOpen ? 'flex' : 'hidden'} md:flex`}>
-          <Inspector open={inspectorOpen} onClose={() => setInspectorOpen(false)} />
+          <Inspector open={inspectorOpen} onClose={() => setInspectorOpen(false)} liveData={liveData} />
         </div>
       </div>
 
       {/* ── Intelligence bar — hidden on mobile (saves space) ── */}
       <div className="hidden md:block">
-        <IntelligenceBar />
+        <IntelligenceBar liveData={liveData} />
       </div>
 
       {/* ── Mobile bottom nav (rendered inside Sidebar component) ── */}

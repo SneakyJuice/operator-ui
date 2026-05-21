@@ -1,10 +1,12 @@
 import { cn } from '@/lib/utils'
 import { AGENTS, MODELS, BUDGET } from '@/lib/constants'
 import { Bot, Cpu, TrendingUp, X } from 'lucide-react'
+import type { LiveData } from '@/lib/useLiveData'
 
 interface InspectorProps {
   open: boolean
   onClose: () => void
+  liveData?: LiveData
 }
 
 export default function Inspector({ open, onClose }: InspectorProps) {
