@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sovereign HQ — Harness Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #071820;
+    --card: #0a2535;
+    --navy: #0E3846;
+    --border: #1a4a62;
+    --gold: #ECAB23;
+    --text: #e8e8e8;
+    --muted: #4a7a94;
+    --sub: #8aacbc;
+    --green: #10b981;
+    --blue: #3b82f6;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 28px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, #071820 0%, #0a2535 100%);
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.3px;
+  }
+  .header p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── Diagram canvas ── */
+  .canvas {
+    position: relative;
+    padding: 24px 32px 100px;
+    min-height: calc(100vh - 120px);
+  }
+
+  svg#lines {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ── Lanes ── */
+  .lane {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 0;
+  }
+  .lane-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-left: 4px;
+    border-left: 2px solid var(--border);
+    padding-left: 8px;
+  }
+  .lane-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  /* ── Nodes ── */
+  .node {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    min-width: 120px;
+  }
+  .node:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    border-color: var(--gold);
+  }
+  .node:hover .tooltip { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+  .node-emoji { font-size: 24px; display: block; margin-bottom: 6px; }
+  .node-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .node-sub  { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* Anthony node */
+  .node-anthony {
+    border-color: var(--gold);
+    box-shadow: 0 0 24px rgba(236,171,35,0.15);
+    min-width: 160px;
+  }
+  .node-anthony .node-name { color: var(--gold); font-size: 14px; }
+
+  /* Zion node — large, glowing */
+  .node-zion {
+    border-color: var(--gold);
+    min-width: 180px;
+    padding: 20px 28px;
+    animation: zion-pulse 3s ease-in-out infinite;
+  }
+  .node-zion .node-emoji { font-size: 32px; }
+  .node-zion .node-name { font-size: 16px; color: var(--gold); }
+
+  @keyframes zion-pulse {
+    0%, 100% { box-shadow: 0 0 16px rgba(236,171,35,0.15); }
+    50%       { box-shadow: 0 0 40px rgba(236,171,35,0.35), 0 0 80px rgba(236,171,35,0.1); }
+  }
+
+  /* Integration nodes — smaller */
+  .node-integration {
+    min-width: 90px;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+  .node-integration .node-emoji { font-size: 18px; margin-bottom: 4px; }
+  .node-integration .node-name  { font-size: 10px; }
+  .node-integration .node-sub   { font-size: 9px; }
+
+  /* ── Tooltip ── */
+  .tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    background: #0d1f2d;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 10px;
+    color: var(--sub);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 100;
+    text-align: left;
+    line-height: 1.6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--border);
+  }
+  .tooltip strong { color: var(--gold); display: block; margin-bottom: 2px; font-size: 11px; }
+
+  /* ── Status bar ── */
+  .statusbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 44px;
+    background: #050f15;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 50;
+    font-size: 11px;
+  }
+  .statusbar .left  { color: var(--muted); }
+  .statusbar .right { color: var(--muted); }
+  .statusbar .pills { display: flex; gap: 12px; }
+  .pill {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 10px; font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .dot-green  { background: var(--green); box-shadow: 0 0 6px rgba(16,185,129,0.6); }
+  .dot-muted  { background: var(--muted); }
+
+  /* ── SVG animated paths ── */
+  .flow-line { fill: none; stroke-width: 1.5; }
+  .flow-gold  { stroke: var(--gold); stroke-dasharray: 6 4; animation: dash 1.8s linear infinite; }
+  .flow-blue  { stroke: var(--blue); stroke-dasharray: 4 6; opacity: 0.5; }
+  .flow-navy  { stroke: var(--border); opacity: 0.4; }
+  .flow-solid { stroke: var(--gold); opacity: 0.6; }
+  .flow-green { stroke: var(--green); stroke-dasharray: 4 4; opacity: 0.5; animation: dash 2.4s linear infinite; }
+
+  @keyframes dash { to { stroke-dashoffset: -20; } }
+
+  /* Animated dot on path */
+  .travel-dot {
+    r: 4;
+    fill: var(--gold);
+    filter: drop-shadow(0 0 4px var(--gold));
+  }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex; gap: 20px; justify-content: center;
+    margin: 0 0 24px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; color: var(--muted);
+  }
+  .legend-line {
+    width: 24px; height: 2px;
+    background: var(--gold);
+  }
+  .legend-line.dashed {
+    background: repeating-linear-gradient(90deg, var(--gold) 0px, var(--gold) 4px, transparent 4px, transparent 8px);
+  }
+  .legend-line.blue {
+    background: var(--blue); opacity: 0.6;
+  }
+  .legend-line.green {
+    background: var(--green); opacity: 0.6;
+  }
+  .legend-line.navy {
+    background: var(--border);
+  }
+
+  /* ── Protocol badge ── */
+  .proto-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(236,171,35,0.12);
+    color: var(--gold);
+    border: 1px solid rgba(236,171,35,0.25);
+    margin-top: 4px;
+  }
+
+  /* separator arrow between zion nodes */
+  .arrow-sep {
+    color: var(--border);
+    font-size: 18px;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>⚡ Sovereign HQ — Harness Architecture</h1>
+  <p>IACP v2.0 · Multi-Agent Orchestration Layer · Built May 2026</p>
+</div>
+
+<div class="canvas" id="canvas">
+
+  <!-- SVG overlay for connection lines -->
+  <svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <!-- LANE 1: Anthony -->
+  <div class="lane">
+    <div class="lane-label">Human Operator</div>
+    <div class="lane-row">
+      <div class="node node-anthony" id="n-anthony">
+        <span class="node-emoji">👑</span>
+        <div class="node-name">Anthony Sealey</div>
+        <div class="node-sub">Operator · Override Authority</div>
+        <div class="tooltip">
+          <strong>Anthony Sealey</strong>
+          Commands · Override · Approval<br>
+          Telegram: primary interface<br>
+          Trust level: absolute
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANE 2: Zion Pipeline -->
+  <div class="lane">
+    <div class="lane-label">Zion — Orchestration Layer</div>
+    <div class="lane-row" id="zion-row">
+      <div class="node" id="n-telegram-in">
+        <span class="node-emoji">📨</span>
+        <div class="node-name">Telegram Input</div>
+        <div class="node-sub">Commands & messages</div>
+        <div class="tooltip">
+          <strong>Telegram Input</strong>
+          Bot API webhook<br>
+          requireMention: true (groups)<br>
+          Channels: HQ · Build Room · Bot Ops
+        </div>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="node node-zion" id="n-zion">
+        <span class="node-emoji">⚡</span>
+        <div class="node-name">Zion</div>
+        <div class="node-sub">Orchestrator · DO Droplet</div>
+        <div class="proto-badge">claude-sonnet-4-6</div>
+        <div class="tooltip">
+          <strong>Zion ⚡ — Orchestrator</strong>
+          IP: 165.245.136.97<br>
+          Model: claude-sonnet-4-6<br>
+          Gateway: port 18789<br>
+          Always On · Memory owner<br>
+          Owns: scheduling · dispatch · delivery
+        </div>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="node" id="n-memory">
+        <span class="node-emoji">🧠</span>
+        <div class="node-name">Memory Layer</div>
+        <div class="node-sub">MEMORY.md · Mem0 · Qdrant</div>
+        <div class="tooltip">
+          <strong>Memory Layer</strong>
+          MEMORY.md: structured facts<br>
+          Mem0/Qdrant: semantic search<br>
+          Daily logs: memory/YYYY-MM-DD.md<br>
+          36 memories seeded · shared across surfaces
+        </div>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="node" id="n-taskcard">
+        <span class="node-emoji">📋</span>
+        <div class="node-name">Task Card Writer</div>
+        <div class="node-sub">JSON · scope locks · retry</div>
+        <div class="tooltip">
+          <strong>Task Card Writer</strong>
+          Schema: TASK_HARNESS_SPEC.json<br>
+          Fields: taskId · surface · model<br>
+          Scope locks prevent conflicts<br>
+          Retry policy: 3x exponential backoff
+        </div>
+      </div>
+      <div class="arrow-sep">→</div>
+      <div class="node" id="n-dispatch">
+        <span class="node-emoji">🚀</span>
+        <div class="node-name">Dispatch Engine</div>
+        <div class="node-sub">dispatch.sh · A2A primary</div>
+        <div class="tooltip">
+          <strong>Dispatch Engine</strong>
+          Primary: A2A Protocol (port 10002)<br>
+          Fallback: SSH<br>
+          3-strike rule on ACCEPT timeout<br>
+          Dead Man's Switch: 45min heartbeat<br>
+          Max 5 concurrent sub-agents
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANE 3: Execution -->
+  <div class="lane">
+    <div class="lane-label">Execution Layer</div>
+    <div class="lane-row">
+      <div class="node" id="n-atlas" style="min-width:160px;">
+        <span class="node-emoji">🔵</span>
+        <div class="node-name">Atlas</div>
+        <div class="node-sub">Primary Executor · Always On</div>
+        <div class="proto-badge">qwen3-235b</div>
+        <div class="tooltip">
+          <strong>Atlas — Primary Executor</strong>
+          Surface: Beelink WSL2<br>
+          IP: 100.78.163.113<br>
+          Model: qwen3-235b<br>
+          A2A: port 10002 · autostart<br>
+          Gateway: port 18789<br>
+          Default route for all tasks
+        </div>
+      </div>
+      <div class="node" id="n-ark" style="min-width:160px;">
+        <span class="node-emoji">🟢</span>
+        <div class="node-name">Ark</div>
+        <div class="node-sub">Secondary Executor · Mobile</div>
+        <div class="proto-badge">qwen3-235b</div>
+        <div class="tooltip">
+          <strong>Ark — Secondary Executor</strong>
+          Surface: Laptop (Windows)<br>
+          IP: 100.124.40.44<br>
+          Model: qwen3-235b<br>
+          A2A: port 10002 · autostart<br>
+          Use when: mobile · GUI · Playwright<br>
+          Not always on
+        </div>
+      </div>
+      <div class="node" id="n-subagents" style="min-width:160px;">
+        <span class="node-emoji">🤖</span>
+        <div class="node-name">Sub-Agents</div>
+        <div class="node-sub">Spawned on demand · max 5</div>
+        <div class="proto-badge">qwen3-235b default</div>
+        <div class="tooltip">
+          <strong>Sub-Agents (Swarm)</strong>
+          Spawned via sessions_spawn<br>
+          Model: qwen3-235b (CFO rule)<br>
+          Max concurrent: 5<br>
+          Naming: Agent [N] — [Role]<br>
+          Budget cap: $10/day hard stop<br>
+          Never Sonnet on runners (GR-016)
+        </div>
+      </div>
+      <div class="node" id="n-buildroom" style="min-width:140px; border-color: var(--blue);">
+        <span class="node-emoji">🏗️</span>
+        <div class="node-name">Build Room</div>
+        <div class="node-sub">Telegram audit trail</div>
+        <div class="tooltip">
+          <strong>Build Room (Telegram)</strong>
+          ID: -1003772945765<br>
+          Purpose: lifecycle audit trail<br>
+          States: DELEGATE→ACCEPT→<br>
+          IN_PROGRESS→COMPLETE/FAILED<br>
+          Human-visible · bots post only
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LANE 4: Integrations -->
+  <div class="lane">
+    <div class="lane-label">Integration Layer — 33 Nodes</div>
+    <div class="lane-row">
+      <div class="node node-integration" id="n-openrouter">
+        <span class="node-emoji">🔀</span>
+        <div class="node-name">OpenRouter</div>
+        <div class="node-sub">Model router</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🤖</span>
+        <div class="node-name">Claude</div>
+        <div class="node-sub">Anthropic</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🧬</span>
+        <div class="node-name">Qwen3-235b</div>
+        <div class="node-sub">Execution</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">✨</span>
+        <div class="node-name">Gemini Flash</div>
+        <div class="node-sub">Bulk tasks</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">📊</span>
+        <div class="node-name">ClickUp</div>
+        <div class="node-sub">Task mgmt</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">📧</span>
+        <div class="node-name">Google WS</div>
+        <div class="node-sub">Gmail · Cal · Drive</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🐙</span>
+        <div class="node-name">GitHub</div>
+        <div class="node-sub">Source control</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">▲</span>
+        <div class="node-name">Vercel</div>
+        <div class="node-sub">Deploy</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🟩</span>
+        <div class="node-name">Supabase</div>
+        <div class="node-sub">Database</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">💾</span>
+        <div class="node-name">Mem0/Qdrant</div>
+        <div class="node-sub">Vector memory</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🎙️</span>
+        <div class="node-name">ElevenLabs</div>
+        <div class="node-sub">TTS · Lamin</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🌊</span>
+        <div class="node-name">Digital Ocean</div>
+        <div class="node-sub">Zion host</div>
+      </div>
+      <div class="node node-integration">
+        <span class="node-emoji">🔗</span>
+        <div class="node-name">Tailscale</div>
+        <div class="node-sub">Mesh VPN</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /canvas -->
+
+<!-- Status bar -->
+<div class="statusbar">
+  <div class="left">Sovereign HQ · IACP v2.0 · Built May 2026</div>
+  <div class="pills">
+    <div class="pill"><div class="dot dot-green"></div>Zion ONLINE</div>
+    <div class="pill"><div class="dot dot-muted"></div>Atlas OFFLINE</div>
+    <div class="pill"><div class="dot dot-muted"></div>Ark OFFLINE</div>
+  </div>
+  <div class="right">3 surfaces · 33 integrations · $10/day budget</div>
+</div>
+
+<!-- Legend -->
+<script>
+// Draw SVG connection lines after layout renders
+window.addEventListener('load', () => {
+  const svg = document.getElementById('lines');
+  const canvas = document.getElementById('canvas');
+
+  function getCenter(id) {
+    const el = document.getElementById(id);
+    if (!el) return null;
+    const cr = canvas.getBoundingClientRect();
+    const er = el.getBoundingClientRect();
+    return {
+      x: er.left - cr.left + er.width / 2,
+      y: er.top - cr.top + er.height / 2,
+      top: er.top - cr.top,
+      bottom: er.top - cr.top + er.height,
+      left: er.left - cr.left,
+      right: er.left - cr.left + er.width,
+    };
+  }
+
+  function makePath(x1, y1, x2, y2, cls, id) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const cx = (x1 + x2) / 2;
+    const cy = (y1 + y2) / 2;
+    const dx = Math.abs(x2 - x1) * 0.4;
+    path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${y1 + dx}, ${x2} ${y2 - dx}, ${x2} ${y2}`);
+    path.setAttribute('class', `flow-line ${cls}`);
+    if (id) path.setAttribute('id', id);
+    svg.appendChild(path);
+    return path;
+  }
+
+  function makeArrow(x1, y1, x2, y2, cls) {
+    // straight line with slight curve
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const dy = y2 - y1;
+    path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${y1 + dy*0.4}, ${x2} ${y2 - dy*0.4}, ${x2} ${y2}`);
+    path.setAttribute('class', `flow-line ${cls}`);
+    svg.appendChild(path);
+    return path;
+  }
+
+  // Animated travelling dot on a path
+  function addTravelDot(pathEl, duration) {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('class', 'travel-dot');
+    circle.setAttribute('r', '4');
+    svg.appendChild(circle);
+
+    const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+    anim.setAttribute('dur', duration + 's');
+    anim.setAttribute('repeatCount', 'indefinite');
+    const mpath = document.createElementNS('http://www.w3.org/2000/svg', 'mpath');
+    mpath.setAttributeNS('http://www.w3.org/1999/xlink', 'href', '#' + pathEl.id);
+    anim.appendChild(mpath);
+    circle.appendChild(anim);
+  }
+
+  // Give paths unique IDs for animateMotion
+  let pid = 0;
+  function nextId() { return 'path-' + (++pid); }
+
+  setTimeout(() => {
+    // Anthony → Zion
+    const anthony = getCenter('n-anthony');
+    const zion = getCenter('n-zion');
+    if (anthony && zion) {
+      const p = makeArrow(anthony.x, anthony.bottom, zion.x, zion.top, 'flow-gold');
+      p.setAttribute('id', nextId());
+      addTravelDot(p, 2.5);
+    }
+
+    // Zion → Atlas
+    const atlas = getCenter('n-atlas');
+    if (zion && atlas) {
+      const p = makeArrow(zion.x - 60, zion.bottom, atlas.x, atlas.top, 'flow-gold');
+      p.setAttribute('id', nextId());
+      addTravelDot(p, 1.8);
+    }
+
+    // Zion → Ark
+    const ark = getCenter('n-ark');
+    if (zion && ark) {
+      const p = makeArrow(zion.x, zion.bottom, ark.x, ark.top, 'flow-solid');
+      p.setAttribute('id', nextId());
+      addTravelDot(p, 2.2);
+    }
+
+    // Zion → Sub-agents
+    const sub = getCenter('n-subagents');
+    if (zion && sub) {
+      const p = makeArrow(zion.x + 60, zion.bottom, sub.x, sub.top, 'flow-gold');
+      p.setAttribute('id', nextId());
+      addTravelDot(p, 3.0);
+    }
+
+    // Dispatch → Build Room
+    const dispatch = getCenter('n-dispatch');
+    const buildroom = getCenter('n-buildroom');
+    if (dispatch && buildroom) {
+      makeArrow(dispatch.x, dispatch.bottom, buildroom.x, buildroom.top, 'flow-blue');
+    }
+
+    // Atlas/Ark → Build Room
+    if (atlas && buildroom) {
+      makeArrow(atlas.right, atlas.y, buildroom.left, buildroom.y, 'flow-blue');
+    }
+
+    // Memory ↔ Zion (green, bidirectional)
+    const mem = getCenter('n-memory');
+    if (zion && mem) {
+      makeArrow(zion.right, zion.y - 10, mem.left, mem.y - 10, 'flow-green');
+      makeArrow(mem.left, mem.y + 10, zion.right, zion.y + 10, 'flow-green');
+    }
+
+    // Zion → integrations (thin navy lines from dispatch)
+    const openrouter = getCenter('n-openrouter');
+    if (dispatch && openrouter) {
+      makeArrow(dispatch.x, dispatch.bottom, openrouter.x, openrouter.top, 'flow-navy');
+    }
+
+  }, 200);
+});
+</script>
+
+</body>
+</html>
