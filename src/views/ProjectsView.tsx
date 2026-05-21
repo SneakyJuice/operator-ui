@@ -1,4 +1,4 @@
-import { ExternalLink, Github, FolderKanban } from 'lucide-react'
+import { ExternalLink, GitBranch, FolderKanban } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 type Project = {
@@ -150,7 +150,7 @@ export default function ProjectsView() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a2535] text-[#8aacbc] border border-[#1a4a62] text-xs hover:bg-[#123347] hover:text-[#f0f0f0] transition-colors"
                   >
-                    <Github size={11} /> Repo
+                    <GitBranch size={11} /> Repo
                   </a>
                 ) : null}
               </div>
