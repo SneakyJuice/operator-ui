@@ -178,7 +178,7 @@ export default function DesignView() {
         <div className="flex items-start gap-2">
           <Palette size={13} className="text-violet-500 mt-0.5 shrink-0" />
           <div className="text-[11px] text-[#555] leading-relaxed">
-            <span className="text-violet-400 font-medium">Recommended workflow:</span> Start in Claude Design for AI-generated wireframes → export to Excalidraw for architecture sketches → finalize in Canva for brand-polished presentations. Claude Design can hand off directly to Claude Code for implementation.
+            <span className="text-violet-400 font-medium">Recommended workflow:</span> Start in Claude Design for AI-generated wireframes → map architecture in Miro for system diagrams and sprint planning → finalize in Canva for brand-polished presentations. Claude Design can hand off directly to Claude Code for implementation.
           </div>
         </div>
       </div>
