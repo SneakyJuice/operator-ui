@@ -46,7 +46,10 @@ export default function DesignView() {
     () => localStorage.getItem(MIRO_STORAGE_KEY) || ''
   )
   const [miroInput, setMiroInput] = useState('')
-  const [miroOpen, setMiroOpen] = useState(false)
+  // Auto-open if a URL was already saved
+  const [miroOpen, setMiroOpen] = useState<boolean>(
+    () => !!localStorage.getItem(MIRO_STORAGE_KEY)
+  )
   const [editingMiro, setEditingMiro] = useState(false)
 
   return (
@@ -96,6 +99,7 @@ export default function DesignView() {
                 {tool.id === 'miro' ? (
                   <div className="space-y-3">
                     {/* URL input */}
+                    {/* URL input row — always visible when editing or no URL */}
                     {(editingMiro || !miroUrl) ? (
                       <div className="flex items-center gap-2">
                         <input
@@ -112,19 +116,34 @@ export default function DesignView() {
                               setMiroOpen(true)
                             }
                           }}
-                          placeholder="Paste Miro board URL and press Enter…"
+                          placeholder="Paste board URL and press Enter…"
                           className="flex-1 px-3 py-1.5 bg-[#071820] border border-[#1a4a62] rounded-lg text-xs text-[#e8e8e8] placeholder-[#4a7a94] focus:outline-none focus:border-[#ECAB23]"
+                          autoFocus
                         />
-                        {miroUrl && (
+                        {miroInput.trim() && (
                           <button
-                            onClick={() => setEditingMiro(false)}
-                            className="text-[#4a7a94] hover:text-[#8aacbc] text-xs"
+                            onClick={() => {
+                              const url = miroInput.trim()
+                              setMiroUrl(url)
+                              localStorage.setItem(MIRO_STORAGE_KEY, url)
+                              setMiroInput('')
+                              setEditingMiro(false)
+                              setMiroOpen(true)
+                            }}
+                            className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                            style={{ backgroundColor: '#ECAB23', color: '#071820' }}
                           >
+                            Open
+                          </button>
+                        )}
+                        {miroUrl && (
+                          <button onClick={() => setEditingMiro(false)} className="text-[#4a7a94] hover:text-[#8aacbc]">
                             <X size={14} />
                           </button>
                         )}
                       </div>
                     ) : (
+                      /* URL is set — show Open/Close + change link */
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => setMiroOpen(v => !v)}
