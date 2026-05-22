@@ -170,6 +170,8 @@ export default function DesignView() {
                           className="w-full h-full"
                           title="Miro Board"
                           allow="fullscreen; clipboard-read; clipboard-write"
+                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                          referrerPolicy="no-referrer"
                         />
                       </div>
                     )}
