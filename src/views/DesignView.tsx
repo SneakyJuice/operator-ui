@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Palette, ExternalLink, Link, X } from 'lucide-react';
 import { useState } from 'react';
+import HarnessDiagram from '@/components/HarnessDiagram';
 
 const tools = [
   {
@@ -162,17 +163,10 @@ export default function DesignView() {
                       </div>
                     )}
 
-                    {/* Embedded board */}
-                    {miroOpen && miroUrl && (
-                      <div className="rounded-xl overflow-hidden border border-[#1a4a62] mt-3" style={{ height: '600px' }}>
-                        <iframe
-                          src={miroUrl}
-                          className="w-full h-full"
-                          title="Miro Board"
-                          allow="fullscreen; clipboard-read; clipboard-write"
-                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                          referrerPolicy="no-referrer"
-                        />
+                    {/* Harness diagram — rendered inline, no iframe */}
+                    {miroOpen && (
+                      <div className="mt-3">
+                        <HarnessDiagram />
                       </div>
                     )}
                   </div>
