@@ -13,12 +13,12 @@ function Hero() {
           EXCLUSIVE PREVIEW · JUNE 18, 2026
         </div>
         <h1 className="dsr-hero-headline">
-          Enterprise AI That Works<br />
-          <span className="dsr-accent">While Your Team Sells.</span>
+          AI Infrastructure Built<br />
+          <span className="dsr-accent">Independent of the Model.</span>
         </h1>
         <p className="dsr-hero-sub">
-          Operator is an intelligent content and AI orchestration platform built for large sales organizations.
-          Less tool-switching. More closed deals.
+          Operator is a model-agnostic agentic infrastructure platform. It works across every major AI provider,
+          every workflow, and every enterprise stack — without locking you into a single vendor's roadmap.
         </p>
         <div className="dsr-hero-actions">
           <a href="#overview" className="dsr-btn-primary">Explore the Platform</a>
@@ -26,9 +26,9 @@ function Hero() {
         </div>
         <div className="dsr-hero-stats">
           {[
-            { val: '40%', label: 'Faster Rep Ramp Time' },
-            { val: '3×', label: 'Content Engagement Lift' },
-            { val: '62%', label: 'Reduction in Admin Work' },
+            { val: '100%', label: 'Model Agnostic' },
+            { val: '∞', label: 'Provider Portable' },
+            { val: '62%', label: 'Reduction in Manual Work' },
           ].map(s => (
             <div key={s.label} className="dsr-stat">
               <div className="dsr-stat-val">{s.val}</div>
@@ -89,19 +89,19 @@ function Hero() {
 // ── Section: Problem ───────────────────────────────────────────────────────
 const PROBLEMS = [
   {
-    icon: '📂',
-    title: 'Content Lives Everywhere',
-    desc: 'Reps waste hours hunting for the right slide, case study, or compliance doc — and often use outdated materials.',
+    icon: '🔗',
+    title: 'Vendor Lock-In Kills Optionality',
+    desc: 'Most AI platforms tie your workflows to one model provider. When a better model drops, you\'re stuck — or rebuilding from scratch.',
   },
   {
-    icon: '🤖',
-    title: 'AI Tools Don\'t Talk to Each Other',
-    desc: 'Disconnected point solutions create more friction, not less. Teams pay for AI but still move manually.',
+    icon: '🧱',
+    title: 'Point Solutions Don\'t Compound',
+    desc: 'Disconnected AI tools create islands of automation. No shared context, no orchestration, no compound returns — just more tabs.',
   },
   {
-    icon: '📊',
-    title: 'No Visibility Into What Moves Deals',
-    desc: 'Leaders can\'t see what content is working, which reps are struggling, or where deals stall in the buyer journey.',
+    icon: '🔭',
+    title: 'No Layer for Observation & Control',
+    desc: 'Without a harness layer, you can\'t verify what agents did, enforce constraints, or learn from failures systematically.',
   },
 ]
 
@@ -110,9 +110,9 @@ function Problems() {
     <section className="dsr-section dsr-problems" id="overview">
       <div className="dsr-section-inner">
         <div className="dsr-section-label">THE CHALLENGE</div>
-        <h2 className="dsr-section-title">Enterprise sales teams are drowning in complexity.</h2>
+        <h2 className="dsr-section-title">The model is one chip on the board. Most teams are missing everything else.</h2>
         <p className="dsr-section-sub">
-          The tools exist. The talent exists. But the integration layer — the intelligent connective tissue — is missing.
+          The models exist. The APIs exist. But the infrastructure layer — context injection, orchestration, observability, enforcement — is still being built by hand at every org.
         </p>
         <div className="dsr-problem-grid">
           {PROBLEMS.map(p => (
@@ -131,28 +131,28 @@ function Problems() {
 // ── Section: Capabilities ──────────────────────────────────────────────────
 const CAPS = [
   {
-    icon: '🧠',
-    title: 'Content Intelligence',
-    desc: 'AI-powered content routing surfaces the right asset at the right moment in every deal cycle. Compliance-aware.',
-    tags: ['Auto-tagging', 'Version Control', 'Role-Based Access'],
+    icon: '⚙️',
+    title: 'Harness Layer',
+    desc: 'The orchestration and enforcement layer that sits between your teams and every AI model. Context injection, feedback loops, constraints — built once, applied everywhere.',
+    tags: ['Model-Agnostic', 'Context Injection', 'Lifecycle Hooks'],
   },
   {
-    icon: '⚡',
-    title: 'AI Agent Orchestration',
-    desc: 'Deploy specialized agents that handle research, outreach drafts, follow-ups, and data entry — autonomously.',
-    tags: ['Multi-Agent', 'No-Code Triggers', 'Audit Trail'],
+    icon: '🔁',
+    title: 'Multi-Agent Orchestration',
+    desc: 'Spawn, route, and coordinate specialized agents across tasks — with parallel execution, handoffs, and full audit trails. No manual stitching.',
+    tags: ['Parallel Execution', 'Task Decomposition', 'Audit Trail'],
   },
   {
-    icon: '🎯',
-    title: 'Rep Coaching Engine',
-    desc: 'Real-time coaching prompts during calls and async feedback loops that accelerate rep ramp by 40%.',
-    tags: ['Call Analysis', 'Skills Gaps', 'Manager Dashboards'],
+    icon: '🔍',
+    title: 'Observe & Verify',
+    desc: 'Close the self-verification loop. Agents check their own output against defined criteria before surfacing results. Errors become engineering inputs, not stories.',
+    tags: ['Output Verification', 'Failure Signals', 'Ratchet Rules'],
   },
   {
-    icon: '📈',
-    title: 'Deal & Engagement Analytics',
-    desc: 'Track exactly what buyers engage with, when, and for how long — so you know what\'s working before the call.',
-    tags: ['Buyer Intent', 'Content Scoring', 'Pipeline Signals'],
+    icon: '🔌',
+    title: 'Provider-Portable Runtime',
+    desc: 'Run on Claude, GPT, Gemini, or any open model — switch without rebuilding. The harness is yours. The model is a parameter.',
+    tags: ['OpenAI', 'Anthropic', 'Gemini', 'Open Models'],
   },
 ]
 
@@ -164,7 +164,7 @@ function Capabilities() {
     <section className="dsr-section dsr-caps" id="capabilities">
       <div className="dsr-section-inner">
         <div className="dsr-section-label">PLATFORM CAPABILITIES</div>
-        <h2 className="dsr-section-title">One platform. Every layer of the sales motion.</h2>
+        <h2 className="dsr-section-title">One infrastructure layer. Every AI workflow in your org.</h2>
         <div className="dsr-caps-layout">
           <div className="dsr-caps-tabs">
             {CAPS.map((c, i) => (
@@ -211,9 +211,9 @@ function Capabilities() {
 
 // ── Section: How It Works ─────────────────────────────────────────────────
 const STEPS = [
-  { num: '01', title: 'Connect Your Stack', desc: 'Operator integrates with your CRM, content library, communication tools, and HR systems in days — not months.' },
-  { num: '02', title: 'Deploy AI Agents', desc: 'Configure purpose-built agents for each workflow: content routing, rep coaching, deal tracking, and more.' },
-  { num: '03', title: 'Measure & Optimize', desc: 'Real-time dashboards surface what\'s working. AI continuously learns and improves from every interaction.' },
+  { num: '01', title: 'Map Your Workflows', desc: 'We audit your existing AI usage, identify harness gaps, and define the orchestration architecture — model-agnostic from day one.' },
+  { num: '02', title: 'Deploy the Infrastructure', desc: 'Operator ships the harness layer: context pipelines, agent runtimes, enforcement hooks, and observability — wired into your stack.' },
+  { num: '03', title: 'Iterate Without Rebuilding', desc: 'Swap models, add agents, adjust rules — without touching the underlying infrastructure. The platform compounds as you use it.' },
 ]
 
 function HowItWorks() {
@@ -245,26 +245,26 @@ function About() {
         <div className="dsr-about-text">
           <div className="dsr-section-label">ABOUT SOVEREIGN HQ</div>
           <h2 className="dsr-section-title" style={{ fontSize: 'clamp(24px, 3vw, 36px)' }}>
-            We build AI infrastructure for enterprise sales teams.
+            We build the infrastructure layer that makes AI actually work inside your organization.
           </h2>
           <p className="dsr-about-desc">
-            Sovereign HQ is an AI enablement and automation firm specializing in agentic platforms for Fortune 500 sales and operations teams. We don't sell software — we deliver outcomes.
+            Sovereign HQ is an independent AI infrastructure firm. We research, design, and deploy model-agnostic agentic systems for enterprise organizations — not tied to any vendor, not dependent on any single model. The harness is the product.
           </p>
           <div className="dsr-about-person">
             <img src="https://media.licdn.com/dms/image/v2/D4E03AQGnLAP0T_pxvQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1712775549079?e=1753315200&v=beta&t=wL1I8pPNxLkaDgELAQA5k3HNQVFbkzq1EsA5bJz5jyM" alt="Anthony Sealey" className="dsr-headshot" />
             <div>
               <div className="dsr-person-name">Anthony Sealey</div>
               <div className="dsr-person-title">Founder & CEO, Sovereign HQ</div>
-              <div className="dsr-person-sub">19+ years enterprise sales & AI enablement</div>
+              <div className="dsr-person-sub">19+ years enterprise operations & AI infrastructure</div>
             </div>
           </div>
         </div>
         <div className="dsr-about-pillars">
           {[
             { icon: '🔒', label: 'Enterprise-Grade Security' },
-            { icon: '🔗', label: 'Native Integrations' },
-            { icon: '📋', label: 'Compliance-Ready' },
-            { icon: '🚀', label: 'Fast Deployment' },
+            { icon: '🔌', label: 'Model-Agnostic Runtime' },
+            { icon: '🔭', label: 'Research-Grounded' },
+            { icon: '⚡', label: 'Independent Infrastructure' },
           ].map(p => (
             <div key={p.label} className="dsr-pillar">
               <span className="dsr-pillar-icon">{p.icon}</span>
@@ -285,10 +285,10 @@ function DemoTeaser() {
         <div className="dsr-teaser-glow" />
         <div className="dsr-section-label" style={{ color: 'rgba(236,171,35,0.7)', marginBottom: 16 }}>LIVE DEMO</div>
         <h2 className="dsr-section-title" style={{ color: '#fff', marginBottom: 12 }}>
-          See Operator in action — June 18, 2026.
+          See the infrastructure in action — June 18, 2026.
         </h2>
         <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, maxWidth: 480, margin: '0 auto 32px' }}>
-          A full walkthrough of the platform, live with your data and your workflows. Spots are limited.
+          A live walkthrough of the harness layer — model-agnostic, fully observable, running real workflows. Spots are limited.
         </p>
         <div className="dsr-teaser-date">
           <span className="dsr-teaser-cal-icon">📅</span>
