@@ -4,14 +4,14 @@ import {
   Activity, Settings, ChevronRight, FolderKanban, CheckSquare
 } from 'lucide-react'
 
-export type NavSection = 'agents' | 'projects' | 'buildtasks' | 'channels' | 'models' | 'skills' | 'integrations' | 'design' | 'logs' | 'settings' | 'taskfeed' | 'agentmanager'
+export type NavSection = 'agents' | 'projects' | 'buildtasks' | 'channels' | 'models' | 'skills' | 'integrations' | 'design' | 'logs' | 'settings' | 'taskfeed' | 'agentmanager' | 'harness'
 
 interface SidebarProps {
   active: NavSection
   onChange: (s: NavSection) => void
 }
 
-import { LayoutList, Users } from 'lucide-react';
+import { LayoutList, Users, FileText } from 'lucide-react';
 
 const navItems: { id: NavSection; label: string; icon: React.FC<any>; badge?: string }[] = [
   { id: 'agents',       label: 'Agents',       icon: Bot },
@@ -26,6 +26,7 @@ const navItems: { id: NavSection; label: string; icon: React.FC<any>; badge?: st
   { id: 'settings',     label: 'Settings',     icon: Settings },
   { id: 'taskfeed',     label: 'Task Feed',    icon: LayoutList },
   { id: 'agentmanager', label: 'Agent Manager',  icon: Users },
+  { id: 'harness',      label: 'Harness Post',   icon: FileText, badge: 'NEW' },
 ]
 
 // Mobile bottom nav — show only the most important 5

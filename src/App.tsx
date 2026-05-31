@@ -12,6 +12,7 @@ import ProjectsView from '@/views/ProjectsView'
 import BuildTasksView from '@/views/BuildTasksView'
 import TaskFeedView from '@/views/TaskFeedView'
 import AgentManagerView from '@/views/AgentManagerView'
+import HarnessPostView from '@/views/HarnessPostView'
 import { PanelRight, Menu } from 'lucide-react'
 import { useLiveData } from '@/lib/useLiveData'
 
@@ -35,6 +36,7 @@ export default function App() {
       case 'settings':     return <PlaceholderView title="Settings" desc="Gateway config, auth, notifications, and workspace preferences." icon="⚙️" />
       case 'taskfeed':     return <TaskFeedView />
       case 'agentmanager': return <AgentManagerView liveData={liveData} />
+      case 'harness':      return <HarnessPostView />
     }
   }
 

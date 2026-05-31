@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harness Engineering — The Other Half of AI That Actually Matters</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f6f8;
+    color: #1a1a2e;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .card {
+    max-width: 860px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  }
+
+  /* Thumbnail Hero */
+  .hero {
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 */
+    position: relative;
+    background: #0d0d1a;
+    overflow: hidden;
+  }
+
+  .hero img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px 36px;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #F5C400;
+    margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    max-width: 520px;
+  }
+
+  /* Body content */
+  .body {
+    padding: 36px 48px;
+  }
+
+  @media (max-width: 600px) {
+    .body { padding: 24px 20px; }
+  }
+
+  .lede {
+    font-size: 16px;
+    color: #2d2d4a;
+    line-height: 1.7;
+    border-left: 4px solid #F5C400;
+    padding-left: 18px;
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  /* Formula */
+  .formula-box {
+    background: #f8f9fc;
+    border: 1px solid #e2e5ef;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .formula-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8890aa;
+    margin-bottom: 12px;
+  }
+
+  .formula-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .f-pill {
+    background: #ffffff;
+    border: 1.5px solid #d0d4e8;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .f-pill.yellow {
+    background: #fffbea;
+    border-color: #F5C400;
+    color: #6b4f00;
+  }
+
+  .f-pill.green {
+    background: #f0fdf4;
+    border-color: #22c55e;
+    color: #166534;
+  }
+
+  .f-op {
+    font-size: 20px;
+    color: #b0b8cc;
+    font-weight: 300;
+  }
+
+  .formula-note {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #8890aa;
+    font-style: italic;
+  }
+
+  /* Section headers */
+  h2 {
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #003366;
+    margin: 28px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #F5C400;
+    display: inline-block;
+  }
+
+  /* Key insight box */
+  .insight {
+    background: #fffbea;
+    border: 1px solid #fde68a;
+    border-left: 4px solid #F5C400;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: #4a3800;
+    line-height: 1.6;
+  }
+
+  .insight strong {
+    color: #3d2f00;
+  }
+
+  /* Pillar grid */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 560px) {
+    .pillars { grid-template-columns: 1fr; }
+  }
+
+  .pillar {
+    background: #f8f9fc;
+    border: 1px solid #e2e5ef;
+    border-radius: 10px;
+    padding: 16px;
+  }
+
+  .pillar-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .pillar-title {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #003366;
+    margin-bottom: 4px;
+  }
+
+  .pillar-sub {
+    font-size: 11px;
+    color: #6b6b8a;
+    line-height: 1.5;
+  }
+
+  /* Components list */
+  .components {
+    margin: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .component-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    background: #f8f9fc;
+    border-radius: 8px;
+    border-left: 3px solid #003366;
+  }
+
+  .component-row.yellow-border { border-left-color: #F5C400; }
+  .component-row.green-border  { border-left-color: #22c55e; }
+  .component-row.blue-border   { border-left-color: #3b82f6; }
+  .component-row.red-border    { border-left-color: #ef4444; }
+
+  .cr-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .cr-body {}
+  .cr-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a1a2e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .cr-desc {
+    font-size: 12px;
+    color: #6b6b8a;
+    line-height: 1.5;
+  }
+
+  /* Quote */
+  blockquote {
+    margin: 24px 0;
+    padding: 20px 24px;
+    background: #003366;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  blockquote::before {
+    content: '"';
+    font-size: 60px;
+    line-height: 1;
+    color: #F5C400;
+    position: absolute;
+    top: -4px;
+    left: 20px;
+    font-family: Georgia, serif;
+  }
+
+  blockquote p { padding-left: 24px; }
+
+  blockquote .attr {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.55);
+    margin-top: 10px;
+    padding-left: 24px;
+  }
+
+  /* HaaS section */
+  .haas-box {
+    background: linear-gradient(135deg, #003366 0%, #004080 100%);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 20px 0;
+    color: #ffffff;
+  }
+
+  .haas-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #F5C400;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .haas-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.82);
+  }
+
+  .haas-body strong { color: #ffffff; }
+
+  /* The ratchet */
+  .ratchet {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
+    border-left: 4px solid #ef4444;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 13px;
+    color: #7f1d1d;
+    line-height: 1.65;
+  }
+
+  /* Takeaway */
+  .takeaway {
+    background: #f8f9fc;
+    border: 1px solid #e2e5ef;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 28px 0 0;
+    text-align: center;
+  }
+
+  .takeaway-headline {
+    font-size: 17px;
+    font-weight: 800;
+    color: #003366;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .takeaway-sub {
+    font-size: 13px;
+    color: #6b6b8a;
+    line-height: 1.6;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 18px 48px;
+    border-top: 1px solid #e8eaf0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    color: #9099b0;
+  }
+
+  .footer-credit a {
+    color: #003366;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #003366;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 4px;
+    padding: 3px 8px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- Hero Thumbnail -->
+  <div class="hero">
+    <img src="/harness-thumbnail.png" alt="Harness Engineering Diagram" onerror="this.style.display='none'">
+    <div class="hero-overlay">
+      <div class="hero-tag">⚙️ AI Infrastructure</div>
+      <div class="hero-title">The Other Half of AI That Actually Matters</div>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="body">
+
+    <p class="lede">
+      "A decent model with a great harness beats a great model with a bad harness. The debate over which model to use is loud. Most of the actual leverage sits in the scaffolding around it."
+      <br>— Addy Osmani, Google Chrome Engineering
+    </p>
+
+    <!-- Formula -->
+    <div class="formula-box">
+      <div class="formula-label">The Core Equation</div>
+      <div class="formula-row">
+        <div class="f-pill">🤖 Model</div>
+        <div class="f-op">+</div>
+        <div class="f-pill yellow">⚙️ Harness</div>
+        <div class="f-op">=</div>
+        <div class="f-pill green">✅ Functional AI Agent</div>
+      </div>
+      <div class="formula-note">If you're not the model, you're the harness. — Viv Trivedy</div>
+    </div>
+
+    <h2>What Is a Harness?</h2>
+
+    <p style="font-size:14px; color:#3d3d5c; line-height:1.7; margin-bottom:16px;">
+      A harness is every piece of code, configuration, and execution logic that isn't the model itself. A raw model is not an agent. It becomes one once a harness gives it <strong>state, tool execution, feedback loops, and enforceable constraints.</strong>
+    </p>
+
+    <div class="components">
+      <div class="component-row yellow-border">
+        <div class="cr-icon">📋</div>
+        <div class="cr-body">
+          <div class="cr-title">System Prompts & Memory Files</div>
+          <div class="cr-desc">AGENTS.md, skill files, subagent prompts — the operating rules the model follows on every session start.</div>
+        </div>
+      </div>
+      <div class="component-row blue-border">
+        <div class="cr-icon">🛠️</div>
+        <div class="cr-body">
+          <div class="cr-title">Tools, Skills & MCP Servers</div>
+          <div class="cr-desc">The actions the agent can take — bash execution, API calls, browser, file operations, third-party integrations.</div>
+        </div>
+      </div>
+      <div class="component-row green-border">
+        <div class="cr-icon">🔗</div>
+        <div class="cr-body">
+          <div class="cr-title">Orchestration Logic</div>
+          <div class="cr-desc">Subagent spawning, model routing (right model for right task), handoffs, parallel execution, task decomposition.</div>
+        </div>
+      </div>
+      <div class="component-row red-border">
+        <div class="cr-icon">🔐</div>
+        <div class="cr-body">
+          <div class="cr-title">Hooks & Enforcement Layer</div>
+          <div class="cr-desc">Scripts that run at lifecycle points — block destructive commands, require approval, run tests after every edit, enforce compliance.</div>
+        </div>
+      </div>
+      <div class="component-row">
+        <div class="cr-icon">📡</div>
+        <div class="cr-body">
+          <div class="cr-title">Observability</div>
+          <div class="cr-desc">Logs, traces, cost metering, latency tracking — visibility into what the agent actually did, not just what it said.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>The 4 Pillars</h2>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">💉</div>
+        <div class="pillar-title">Context Injection</div>
+        <div class="pillar-sub">Prompts, memory, skills, conversation history — delivered at query time so the model always works with ground truth, not stale weights.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🎯</div>
+        <div class="pillar-title">Control</div>
+        <div class="pillar-sub">Compaction, orchestration, feedback loops. Managing what the agent does, when it stops, and how it recovers from failure.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🔍</div>
+        <div class="pillar-title">Observe & Verify</div>
+        <div class="pillar-sub">Screenshots, tests, logs — closing the self-verification loop so the agent can check its own output before calling done.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💾</div>
+        <div class="pillar-title">Persist</div>
+        <div class="pillar-sub">Filesystem, git, progress files — durable state across sessions. No amnesia. Every session picks up where the last left off.</div>
+      </div>
+    </div>
+
+    <h2>The Skill Issue Reframe</h2>
+
+    <div class="insight">
+      <strong>The harness-engineering mindset rejects "blame the model."</strong> Most agent failures are legible: the agent didn't know a convention → add it to AGENTS.md. The agent ran a destructive command → add a hook that blocks it. The agent kept "finishing" broken code → wire a typecheck back-pressure signal into the loop.
+      <br><br>
+      On Terminal Bench 2.0, Claude Opus 4.6 running in Claude Code scores far lower than the same model in a custom harness. One team moved from Top 30 to <strong>Top 5 by changing only the harness.</strong>
+    </div>
+
+    <h2>The Ratchet Principle</h2>
+
+    <div class="ratchet">
+      Every agent mistake is a permanent signal, not a story to laugh about. When the agent fails → engineer a fix → it never makes that mistake again. Every line in a good AGENTS.md is traceable to a specific failure. You can't download the right harness. It's shaped by your failure history.
+    </div>
+
+    <blockquote>
+      <p>"The gap between what today's models can do and what you see them doing is largely a harness gap. This is the opposite of the 'just wait for GPT-6' narrative."</p>
+      <div class="attr">— Addy Osmani, Agent Harness Engineering (April 2026)</div>
+    </blockquote>
+
+    <h2>Where This Is Going: HaaS</h2>
+
+    <div class="haas-box">
+      <div class="haas-title">Harness-as-a-Service (HaaS)</div>
+      <div class="haas-body">
+        We're moving from <strong>LLM APIs</strong> (which give you a completion) to <strong>harness APIs</strong> (which give you a runtime). The Claude Agent SDK, Codex SDK, and OpenAI Agents SDK all point in the same direction — you get the loop, the tools, the context management, the hooks, and the sandbox primitives out of the box. Your job is to configure and customize them for your domain.
+        <br><br>
+        <strong>The shift:</strong> Stop debating which model to use. Start engineering the system around it.
+      </div>
+    </div>
+
+    <!-- Takeaway -->
+    <div class="takeaway">
+      <div class="takeaway-headline">The model is one chip on the board.<br>The harness is everything else that makes it useful.</div>
+      <div class="takeaway-sub" style="margin-top:10px;">
+        Harness engineering is a discipline — not a framework you download. The teams winning in 2026 aren't the ones with the best model access. They're the ones with the tightest harness, the sharpest feedback loops, and the discipline to treat every agent failure as an engineering input.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-credit">
+      Influenced by <a href="https://addyosmani.com/blog/agent-harness-engineering/" target="_blank">Addy Osmani's Agent Harness Engineering</a> · Sovereign HQ · 2026
+    </div>
+    <div class="tags">
+      <span class="tag">#HarnessEngineering</span>
+      <span class="tag">#AIAgents</span>
+      <span class="tag">#AgenticAI</span>
+      <span class="tag">#HaaS</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
