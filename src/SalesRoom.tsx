@@ -294,6 +294,52 @@ function DemoTeaser() {
           <span className="dsr-teaser-cal-icon">📅</span>
           <span>June 18, 2026 &nbsp;·&nbsp; Live Demo Session</span>
         </div>
+
+        {/* Harness Engineering Post Card */}
+        <a
+          href="/harness-post.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 20,
+            marginTop: 48,
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(236,171,35,0.2)',
+            borderRadius: 16,
+            padding: '20px 24px',
+            maxWidth: 620,
+            width: '100%',
+            margin: '48px auto 0',
+            textDecoration: 'none',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.55)'
+            ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.08)'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.2)'
+            ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.05)'
+          }}
+        >
+          <img
+            src="/harness-thumbnail.png"
+            alt="Harness Engineering"
+            style={{ width: 100, height: 64, objectFit: 'cover', borderRadius: 8, flexShrink: 0 }}
+          />
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', color: 'rgba(236,171,35,0.75)', marginBottom: 6 }}>ENGINEERING POST</div>
+            <div style={{ fontSize: 15, fontWeight: 600, color: '#f0f0f0', lineHeight: 1.4, marginBottom: 6 }}>
+              The Other Half of AI That Actually Matters
+            </div>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, margin: 0 }}>
+              The model is one chip on the board. Context injection, orchestration, observability, and enforcement — that's the harness layer most teams are still building by hand.
+            </p>
+            <div style={{ marginTop: 10, fontSize: 12, color: 'rgba(236,171,35,0.6)' }}>Read the post →</div>
+          </div>
+        </a>
       </div>
     </section>
   )
