@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { AGENTS, CHANNELS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Send, Bot, Hash, Zap, Clock } from 'lucide-react'
+import ChannelMirrorView from './ChannelMirrorView'
 
-type Tab = { id: string; name: string; emoji: string; type: 'agent' | 'channel'; subtitle: string }
+type Tab = { id: string; name: string; emoji: string; type: 'agent' | 'channel'; subtitle: string; chatId?: string }
 
 const tabs: Tab[] = [
   ...AGENTS.map(a => ({ id: a.id, name: a.name, emoji: a.emoji, type: 'agent' as const, subtitle: a.role })),
-  ...CHANNELS.map(c => ({ id: c.id, name: c.name, emoji: c.emoji, type: 'channel' as const, subtitle: c.desc })),
+  ...CHANNELS.map(c => ({ id: c.id, name: c.name, emoji: c.emoji, type: 'channel' as const, subtitle: c.desc, chatId: c.chatId })),
 ]
 
 interface Message {
@@ -106,6 +107,20 @@ export default function AgentsView() {
         </div>
       </div>
 
+      {/* Channel mirror — renders full view and returns early */}
+      {current.type === 'channel' && current.chatId && (
+        <ChannelMirrorView
+          chatId={current.chatId}
+          channelName={current.name}
+          channelEmoji={current.emoji}
+          pollIntervalMs={10000}
+        />
+      )}
+      {current.type === 'channel' && !current.chatId && (
+        <div className="flex-1 flex items-center justify-center text-[#444] text-sm">No chatId configured for {current.name}</div>
+      )}
+      {current.type === 'channel' ? null : (
+      <>
       {/* Chat header */}
       <div className="flex items-center gap-3 px-5 py-3 border-b border-[#1a1a1a] bg-[#0f0f0f] shrink-0">
         <span className="text-xl">{current.emoji}</span>
@@ -171,6 +186,8 @@ export default function AgentsView() {
           <span className="text-[9px] text-[#444]">Connected to OpenClaw gateway · claude-sonnet-4-6 · Enter to send</span>
         </div>
       </div>
+      </>
+      )}
     </div>
   )
 }
