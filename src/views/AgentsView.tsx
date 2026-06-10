@@ -45,25 +45,77 @@ const demoMessages: Record<string, Message[]> = {
   ],
 }
 
+function nowTime() {
+  return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+}
+
 export default function AgentsView() {
   const [activeTab, setActiveTab] = useState<string>('zion')
   const [messages, setMessages] = useState<Record<string, Message[]>>(demoMessages)
   const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)
 
   const current = tabs.find(t => t.id === activeTab)!
   const currentMessages = messages[activeTab] || []
 
-  const handleSend = () => {
-    if (!input.trim()) return
+  const handleSend = async () => {
+    if (!input.trim() || sending) return
+    const text = input.trim()
+    const tabAtSend = activeTab
     const msg: Message = {
       id: Date.now().toString(),
       role: 'user',
-      content: input.trim(),
-      timestamp: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
+      content: text,
+      timestamp: nowTime(),
     }
-    setMessages(prev => ({ ...prev, [activeTab]: [...(prev[activeTab] || []), msg] }))
+    setMessages(prev => ({ ...prev, [tabAtSend]: [...(prev[tabAtSend] || []), msg] }))
     setInput('')
-    // TODO: connect to OpenClaw gateway WebSocket
+
+    // Live wire — only Zion responds for now
+    if (tabAtSend !== 'zion') {
+      setMessages(prev => ({
+        ...prev,
+        [tabAtSend]: [...(prev[tabAtSend] || []), {
+          id: Date.now().toString() + '-r',
+          role: 'assistant' as const,
+          content: tabAtSend === 'atlas' || tabAtSend === 'ark'
+            ? `${tabAtSend.charAt(0).toUpperCase() + tabAtSend.slice(1)} is on a private Tailscale network — not wired for live chat yet. Message Zion instead.`
+            : 'Channels are read-only mirrors — send via Telegram.',
+          timestamp: nowTime(),
+        }],
+      }))
+      return
+    }
+
+    setSending(true)
+    try {
+      const res = await fetch('/api/agent-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, agentId: 'zion' }),
+      })
+      const data = await res.json() as { reply?: string; model?: string; error?: string }
+      const reply: Message = {
+        id: Date.now().toString() + '-r',
+        role: 'assistant',
+        content: data.reply || `⚠️ ${data.error || 'No response from gateway'}`,
+        model: data.model?.split('/').pop(),
+        timestamp: nowTime(),
+      }
+      setMessages(prev => ({ ...prev, [tabAtSend]: [...(prev[tabAtSend] || []), reply] }))
+    } catch (e) {
+      setMessages(prev => ({
+        ...prev,
+        [tabAtSend]: [...(prev[tabAtSend] || []), {
+          id: Date.now().toString() + '-e',
+          role: 'assistant' as const,
+          content: `⚠️ Connection failed: ${String(e).slice(0, 120)}`,
+          timestamp: nowTime(),
+        }],
+      }))
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -161,6 +213,13 @@ export default function AgentsView() {
             </div>
           </div>
         ))}
+        {sending && (
+          <div className="flex justify-start">
+            <div className="bg-[#161616] text-[#888] border border-[#222] rounded-xl px-4 py-3 text-sm">
+              <span className="animate-pulse">⚡ Zion is thinking…</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Input */}
@@ -183,7 +242,7 @@ export default function AgentsView() {
         </div>
         <div className="flex items-center gap-2 mt-1.5 px-1">
           <Zap size={9} className="text-[#444]" />
-          <span className="text-[9px] text-[#444]">Connected to OpenClaw gateway · claude-sonnet-4-6 · Enter to send</span>
+          <span className="text-[9px] text-[#444]">{current.id === 'zion' ? 'Live — wired to OpenClaw gateway · gemini-2.5-flash · Enter to send' : 'Demo mode — only Zion is wired for live chat'}</span>
         </div>
       </div>
       </>
