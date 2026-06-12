@@ -407,7 +407,7 @@ function Insights() {
         </p>
 
         {/* Infographics */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: 20, marginBottom: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(380px, 100%), 1fr))', gap: 20, marginBottom: 20 }}>
           {INFOGRAPHICS.map(ig => (
             <a
               key={ig.href}
@@ -439,7 +439,7 @@ function Insights() {
         </div>
 
         {/* Articles */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: 20 }}>
           {ARTICLES.map(a => (
             <a
               key={a.href}
