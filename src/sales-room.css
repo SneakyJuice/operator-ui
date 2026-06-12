@@ -4,18 +4,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --gold: #ECAB23;
-  --gold-dim: rgba(236, 171, 35, 0.15);
-  --gold-border: rgba(236, 171, 35, 0.3);
-  --teal-deep: #0E3846;
-  --bg: #061f2a;
-  --bg-card: rgba(14, 56, 70, 0.35);
-  --bg-card-hover: rgba(14, 56, 70, 0.55);
-  --text: #f0f0f0;
-  --text-muted: rgba(255, 255, 255, 0.5);
-  --text-dim: rgba(255, 255, 255, 0.25);
-  --border: rgba(255, 255, 255, 0.07);
-  --border-teal: rgba(14, 56, 70, 0.6);
+  --gold: #F5C800;
+  --gold-dim: rgba(245, 200, 0, 0.12);
+  --gold-border: rgba(245, 200, 0, 0.4);
+  --teal-deep: #002347;
+  --bg: #FFFFFF;
+  --bg-card: #F8F9FA;
+  --bg-card-hover: #F0F2F5;
+  --text: #1A1A1A;
+  --text-muted: #555555;
+  --text-dim: #999999;
+  --border: #E5E5E5;
+  --border-teal: #002347;
   --radius: 12px;
   --radius-sm: 8px;
   --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -30,6 +30,14 @@
   overflow-x: hidden;
 }
 
+.dsr-section {
+  background: #FFFFFF;
+}
+
+.dsr-section:nth-child(even) {
+  background: #F8F9FA;
+}
+
 /* ── Nav ───────────────────────────────────────── */
 .dsr-nav {
   position: sticky;
@@ -40,7 +48,7 @@
   justify-content: space-between;
   padding: 0 40px;
   height: 56px;
-  background: rgba(6, 31, 42, 0.92);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -53,7 +61,7 @@
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: rgba(255,255,255,0.7);
+  color: #333333;
 }
 .dsr-nav-product {
   font-size: 11px;
@@ -91,6 +99,7 @@
 /* ── Shared section styles ──────────────────────── */
 .dsr-section {
   padding: 96px 40px;
+  background: #FFFFFF;
 }
 .dsr-section-inner {
   max-width: 1100px;
@@ -158,31 +167,8 @@
   padding: 80px 40px;
   overflow: hidden;
 }
-.dsr-hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 60% at 70% 50%, rgba(14, 56, 70, 0.4) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(236, 171, 35, 0.04) 0%, transparent 60%);
-  pointer-events: none;
-}
-.dsr-hero-glow-left {
-  position: absolute;
-  top: -100px;
-  left: -100px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(14, 56, 70, 0.5) 0%, transparent 70%);
-  pointer-events: none;
-}
-.dsr-hero-glow-right {
-  position: absolute;
-  bottom: -80px;
-  right: -80px;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(236, 171, 35, 0.06) 0%, transparent 70%);
-  pointer-events: none;
+.dsr-hero-bg, .dsr-hero-glow-left, .dsr-hero-glow-right {
+  display: none;
 }
 .dsr-hero-content {
   position: relative;
@@ -218,7 +204,7 @@
   align-items: center;
   gap: 8px;
   background: var(--gold);
-  color: #071820;
+  color: #1A1A1A;
   font-size: 13px;
   font-weight: 700;
   padding: 12px 24px;
@@ -232,13 +218,16 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--text-muted);
+  color: #1A1A1A;
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
+  border: 1px solid #1A1A1A;
+  padding: 11px 23px;
+  border-radius: var(--radius-sm);
 }
-.dsr-btn-ghost:hover { color: var(--text); }
+.dsr-btn-ghost:hover { color: #F5C800; border-color: #F5C800; }
 .dsr-hero-stats {
   display: flex;
   gap: 32px;
@@ -749,7 +738,7 @@
 .dsr-footer {
   padding: 24px 40px;
   border-top: 1px solid var(--border);
-  background: rgba(6,31,42,0.95);
+  background: #FFFFFF;
 }
 .dsr-footer-inner {
   max-width: 1100px;
