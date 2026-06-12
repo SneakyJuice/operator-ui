@@ -18,7 +18,7 @@ function Hero() {
         </h1>
         <p className="dsr-hero-sub">
           Operator is a model-agnostic agentic infrastructure platform. It works across every major AI provider,
-          every workflow, and every enterprise stack — without locking you into a single vendor's roadmap.
+          every workflow, and every enterprise stack - without locking you into a single vendor's roadmap.
         </p>
         <div className="dsr-hero-actions">
           <a href="#overview" className="dsr-btn-primary">Explore the Platform</a>
@@ -91,12 +91,12 @@ const PROBLEMS = [
   {
     icon: '🔗',
     title: 'Vendor Lock-In Kills Optionality',
-    desc: 'Most AI platforms tie your workflows to one model provider. When a better model drops, you\'re stuck — or rebuilding from scratch.',
+    desc: 'Most AI platforms tie your workflows to one model provider. When a better model drops, you\'re stuck - or rebuilding from scratch.',
   },
   {
     icon: '🧱',
     title: 'Point Solutions Don\'t Compound',
-    desc: 'Disconnected AI tools create islands of automation. No shared context, no orchestration, no compound returns — just more tabs.',
+    desc: 'Disconnected AI tools create islands of automation. No shared context, no orchestration, no compound returns - just more tabs.',
   },
   {
     icon: '🔭',
@@ -112,7 +112,7 @@ function Problems() {
         <div className="dsr-section-label">THE CHALLENGE</div>
         <h2 className="dsr-section-title">The model is one chip on the board. Most teams are missing everything else.</h2>
         <p className="dsr-section-sub">
-          The models exist. The APIs exist. But the infrastructure layer — context injection, orchestration, observability, enforcement — is still being built by hand at every org.
+          The models exist. The APIs exist. But the infrastructure layer - context injection, orchestration, observability, enforcement - is still being built by hand at every org.
         </p>
         <div className="dsr-problem-grid">
           {PROBLEMS.map(p => (
@@ -133,13 +133,13 @@ const CAPS = [
   {
     icon: '⚙️',
     title: 'Harness Layer',
-    desc: 'The orchestration and enforcement layer that sits between your teams and every AI model. Context injection, feedback loops, constraints — built once, applied everywhere.',
+    desc: 'The orchestration and enforcement layer that sits between your teams and every AI model. Context injection, feedback loops, constraints - built once, applied everywhere.',
     tags: ['Model-Agnostic', 'Context Injection', 'Lifecycle Hooks'],
   },
   {
     icon: '🔁',
     title: 'Multi-Agent Orchestration',
-    desc: 'Spawn, route, and coordinate specialized agents across tasks — with parallel execution, handoffs, and full audit trails. No manual stitching.',
+    desc: 'Spawn, route, and coordinate specialized agents across tasks - with parallel execution, handoffs, and full audit trails. No manual stitching.',
     tags: ['Parallel Execution', 'Task Decomposition', 'Audit Trail'],
   },
   {
@@ -151,7 +151,7 @@ const CAPS = [
   {
     icon: '🔌',
     title: 'Provider-Portable Runtime',
-    desc: 'Run on Claude, GPT, Gemini, or any open model — switch without rebuilding. The harness is yours. The model is a parameter.',
+    desc: 'Run on Claude, GPT, Gemini, or any open model - switch without rebuilding. The harness is yours. The model is a parameter.',
     tags: ['OpenAI', 'Anthropic', 'Gemini', 'Open Models'],
   },
 ]
@@ -188,7 +188,7 @@ function Capabilities() {
               ))}
             </div>
             <div className="dsr-caps-preview">
-              <div className="dsr-preview-label">LIVE PREVIEW — JUNE 18</div>
+              <div className="dsr-preview-label">LIVE PREVIEW - JUNE 18</div>
               <div className="dsr-preview-placeholder">
                 <div className="dsr-preview-lines">
                   {[...Array(5)].map((_, i) => (
@@ -211,9 +211,9 @@ function Capabilities() {
 
 // ── Section: How It Works ─────────────────────────────────────────────────
 const STEPS = [
-  { num: '01', title: 'Map Your Workflows', desc: 'We audit your existing AI usage, identify harness gaps, and define the orchestration architecture — model-agnostic from day one.' },
-  { num: '02', title: 'Deploy the Infrastructure', desc: 'Operator ships the harness layer: context pipelines, agent runtimes, enforcement hooks, and observability — wired into your stack.' },
-  { num: '03', title: 'Iterate Without Rebuilding', desc: 'Swap models, add agents, adjust rules — without touching the underlying infrastructure. The platform compounds as you use it.' },
+  { num: '01', title: 'Map Your Workflows', desc: 'We audit your existing AI usage, identify harness gaps, and define the orchestration architecture - model-agnostic from day one.' },
+  { num: '02', title: 'Deploy the Infrastructure', desc: 'Operator ships the harness layer: context pipelines, agent runtimes, enforcement hooks, and observability - wired into your stack.' },
+  { num: '03', title: 'Iterate Without Rebuilding', desc: 'Swap models, add agents, adjust rules - without touching the underlying infrastructure. The platform compounds as you use it.' },
 ]
 
 function HowItWorks() {
@@ -248,7 +248,7 @@ function About() {
             We build the infrastructure layer that makes AI actually work inside your organization.
           </h2>
           <p className="dsr-about-desc">
-            Sovereign HQ is an independent AI infrastructure firm. We research, design, and deploy model-agnostic agentic systems for enterprise organizations — not tied to any vendor, not dependent on any single model. The harness is the product.
+            Sovereign HQ is an independent AI infrastructure firm. We research, design, and deploy model-agnostic agentic systems for enterprise organizations - not tied to any vendor, not dependent on any single model. The harness is the product.
           </p>
           <div className="dsr-about-person">
             <img src="https://media.licdn.com/dms/image/v2/D4E03AQGnLAP0T_pxvQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1712775549079?e=1753315200&v=beta&t=wL1I8pPNxLkaDgELAQA5k3HNQVFbkzq1EsA5bJz5jyM" alt="Anthony Sealey" className="dsr-headshot" />
@@ -285,10 +285,10 @@ function DemoTeaser() {
         <div className="dsr-teaser-glow" />
         <div className="dsr-section-label" style={{ color: 'rgba(236,171,35,0.7)', marginBottom: 16 }}>LIVE DEMO</div>
         <h2 className="dsr-section-title" style={{ color: '#fff', marginBottom: 12 }}>
-          See the infrastructure in action — June 18, 2026.
+          See the infrastructure in action - June 18, 2026.
         </h2>
         <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, maxWidth: 480, margin: '0 auto 32px' }}>
-          A live walkthrough of the harness layer — model-agnostic, fully observable, running real workflows. Spots are limited.
+          A live walkthrough of the harness layer - model-agnostic, fully observable, running real workflows. Spots are limited.
         </p>
         <div className="dsr-teaser-date">
           <span className="dsr-teaser-cal-icon">📅</span>
@@ -335,7 +335,7 @@ function DemoTeaser() {
               The Other Half of AI That Actually Matters
             </div>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, margin: 0 }}>
-              The model is one chip on the board. Context injection, orchestration, observability, and enforcement — that's the harness layer most teams are still building by hand.
+              The model is one chip on the board. Context injection, orchestration, observability, and enforcement - that's the harness layer most teams are still building by hand.
             </p>
             <div style={{ marginTop: 10, fontSize: 12, color: 'rgba(236,171,35,0.6)' }}>Read the post →</div>
           </div>
@@ -351,16 +351,16 @@ const INFOGRAPHICS = [
     src: '/infographic-platform-landscape.jpg',
     alt: 'AI Agent Platform Landscape 2026',
     tag: 'PLATFORM LANDSCAPE',
-    title: 'AI Agent Platforms — 2026 Landscape',
-    desc: 'OpenClaw, NemoClaw (NVIDIA), Gemini Spark (Google), Perplexity Computer, Microsoft Scout, and Meta Hatch — mapped and compared.',
+    title: 'AI Agent Platforms - 2026 Landscape',
+    desc: 'OpenClaw, NemoClaw (NVIDIA), Gemini Spark (Google), Perplexity Computer, Microsoft Scout, and Meta Hatch - mapped and compared.',
     href: 'https://sealey.ai/blog/13-ai-agent-platform-landscape-2026.html',
   },
   {
     src: '/infographic-bmad-frameworks.png',
     alt: 'AI Dev Frameworks Capability Map',
     tag: 'DEV FRAMEWORKS',
-    title: 'AI Dev Frameworks — Capability Map',
-    desc: 'BMAD vs Claude Code vs Codex vs Cursor — side-by-side on model agnostic, sub-agents, memory, routing, and enterprise SSO.',
+    title: 'AI Dev Frameworks - Capability Map',
+    desc: 'BMAD vs Claude Code vs Codex vs Cursor - side-by-side on model agnostic, sub-agents, memory, routing, and enterprise SSO.',
     href: 'https://sealey.ai/blog/14-ai-dev-frameworks-comparison-2026.html',
   },
 ]
@@ -370,7 +370,7 @@ const ARTICLES = [
     emoji: '🔄',
     tag: 'AGENTIC SYSTEMS',
     title: 'The Loop Is the Product: How Agentic Systems Actually Work',
-    desc: 'Why AI that thinks once isn't AI at all — and what loop engineering means for your organization.',
+    desc: "Why AI that thinks once isn't AI at all \u2014 and what loop engineering means for your organization.",
     href: 'https://sealey.ai/blog/11-agentic-loops.html',
   },
   {
@@ -384,14 +384,14 @@ const ARTICLES = [
     emoji: '🌐',
     tag: 'PLATFORM LANDSCAPE',
     title: 'The AI Agent Platform Wars: Every Major Tech Company Is Now Building What OpenClaw Started',
-    desc: 'From a self-hosted personal AI to NVIDIA, Google, Microsoft, Meta, and Perplexity — the race to own the agentic future is on.',
+    desc: 'From a self-hosted personal AI to NVIDIA, Google, Microsoft, Meta, and Perplexity - the race to own the agentic future is on.',
     href: 'https://sealey.ai/blog/13-ai-agent-platform-landscape-2026.html',
   },
   {
     emoji: '⚙️',
     tag: 'DEV FRAMEWORKS',
     title: 'BMAD, Claude Code, Codex, and Cursor: The AI Development Framework Showdown',
-    desc: 'A capability-by-capability breakdown of the four tools redefining how software gets built — and which one belongs in your workflow.',
+    desc: 'A capability-by-capability breakdown of the four tools redefining how software gets built - and which one belongs in your workflow.',
     href: 'https://sealey.ai/blog/14-ai-dev-frameworks-comparison-2026.html',
   },
 ]
@@ -403,7 +403,7 @@ function Insights() {
         <div className="dsr-section-label" style={{ textAlign: 'center', marginBottom: 12 }}>INSIGHTS</div>
         <h2 className="dsr-section-title" style={{ textAlign: 'center', marginBottom: 8 }}>Practitioner Research</h2>
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.45)', fontSize: 14, marginBottom: 48, maxWidth: 520, margin: '0 auto 48px' }}>
-          Written from the field — what we learned building and operating real AI infrastructure.
+          Written from the field - what we learned building and operating real AI infrastructure.
         </p>
 
         {/* Infographics */}
