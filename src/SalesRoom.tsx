@@ -284,10 +284,10 @@ function DemoTeaser() {
       <div className="dsr-teaser-inner">
         <div className="dsr-teaser-glow" />
         <div className="dsr-section-label" style={{ color: 'rgba(236,171,35,0.7)', marginBottom: 16 }}>LIVE DEMO</div>
-        <h2 className="dsr-section-title" style={{ color: '#fff', marginBottom: 12 }}>
+        <h2 className="dsr-section-title" style={{ color: '#111111', marginBottom: 12 }}>
           See the infrastructure in action - June 18, 2026.
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, maxWidth: 480, margin: '0 auto 32px' }}>
+        <p style={{ color: '#444444', fontSize: 15, maxWidth: 480, margin: '0 auto 32px' }}>
           A live walkthrough of the harness layer - model-agnostic, fully observable, running real workflows. Spots are limited.
         </p>
         <div className="dsr-teaser-date">
@@ -331,10 +331,10 @@ function DemoTeaser() {
           />
           <div style={{ textAlign: 'left' }}>
             <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', color: 'rgba(236,171,35,0.75)', marginBottom: 6 }}>ENGINEERING POST</div>
-            <div style={{ fontSize: 15, fontWeight: 600, color: '#f0f0f0', lineHeight: 1.4, marginBottom: 6 }}>
+            <div style={{ fontSize: 15, fontWeight: 600, color: '#111111', lineHeight: 1.4, marginBottom: 6 }}>
               The Other Half of AI That Actually Matters
             </div>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, margin: 0 }}>
+            <p style={{ fontSize: 13, color: '#555555', lineHeight: 1.5, margin: 0 }}>
               The model is one chip on the board. Context injection, orchestration, observability, and enforcement - that's the harness layer most teams are still building by hand.
             </p>
             <div style={{ marginTop: 10, fontSize: 12, color: 'rgba(236,171,35,0.6)' }}>Read the post →</div>
@@ -402,7 +402,7 @@ function Insights() {
       <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 24px' }}>
         <div className="dsr-section-label" style={{ textAlign: 'center', marginBottom: 12 }}>INSIGHTS</div>
         <h2 className="dsr-section-title" style={{ textAlign: 'center', marginBottom: 8 }}>Practitioner Research</h2>
-        <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.45)', fontSize: 14, marginBottom: 48, maxWidth: 520, margin: '0 auto 48px' }}>
+        <p style={{ textAlign: 'center', color: '#555555', fontSize: 14, marginBottom: 48, maxWidth: 520, margin: '0 auto 48px' }}>
           Written from the field - what we learned building and operating real AI infrastructure.
         </p>
 
@@ -430,8 +430,8 @@ function Insights() {
               <img src={ig.src} alt={ig.alt} style={{ width: '100%', display: 'block', borderRadius: '14px 14px 0 0' }} />
               <div style={{ padding: '12px 16px 16px' }}>
                 <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(236,171,35,0.7)', marginBottom: 6 }}>{ig.tag} · INFOGRAPHIC</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#e8e8e8', lineHeight: 1.4, marginBottom: 4 }}>{ig.title}</div>
-                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', lineHeight: 1.5, margin: '0 0 8px' }}>{ig.desc}</p>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#111111', lineHeight: 1.4, marginBottom: 4 }}>{ig.title}</div>
+                <p style={{ fontSize: 11, color: '#666666', lineHeight: 1.5, margin: '0 0 8px' }}>{ig.desc}</p>
                 <div style={{ fontSize: 11, color: 'rgba(236,171,35,0.6)' }}>Read full breakdown →</div>
               </div>
             </a>
@@ -470,8 +470,8 @@ function Insights() {
                 <span style={{ fontSize: 22 }}>{a.emoji}</span>
                 <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(236,171,35,0.7)' }}>{a.tag}</span>
               </div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: '#e8e8e8', lineHeight: 1.4 }}>{a.title}</div>
-              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#111111', lineHeight: 1.4 }}>{a.title}</div>
+              <p style={{ fontSize: 12, color: '#555555', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
               <div style={{ fontSize: 11, color: 'rgba(236,171,35,0.6)', marginTop: 4 }}>Read article →</div>
             </a>
           ))}
