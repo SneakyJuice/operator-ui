@@ -345,6 +345,89 @@ function DemoTeaser() {
   )
 }
 
+// ── Section: Insights ───────────────────────────────────────────────────────
+const ARTICLES = [
+  {
+    emoji: '🔄',
+    tag: 'AGENTIC SYSTEMS',
+    title: 'The Loop Is the Product: How Agentic Systems Actually Work',
+    desc: 'Why AI that thinks once isn't AI at all — and what loop engineering means for your organization.',
+    href: 'https://sealey.ai/blog/11-agentic-loops.html',
+  },
+  {
+    emoji: '🏗️',
+    tag: 'INFRASTRUCTURE',
+    title: 'Why Smart Operators Are Running AI on Their Own Infrastructure',
+    desc: 'The case for private models, sovereign stacks, and why vendor lock-in is the silent AI tax.',
+    href: 'https://sealey.ai/blog/12-private-ai-infrastructure.html',
+  },
+  {
+    emoji: '🌐',
+    tag: 'PLATFORM LANDSCAPE',
+    title: 'The AI Agent Platform Wars: Every Major Tech Company Is Now Building What OpenClaw Started',
+    desc: 'From a self-hosted personal AI to NVIDIA, Google, Microsoft, Meta, and Perplexity — the race to own the agentic future is on.',
+    href: 'https://sealey.ai/blog/13-ai-agent-platform-landscape-2026.html',
+  },
+  {
+    emoji: '⚙️',
+    tag: 'DEV FRAMEWORKS',
+    title: 'BMAD, Claude Code, Codex, and Cursor: The AI Development Framework Showdown',
+    desc: 'A capability-by-capability breakdown of the four tools redefining how software gets built — and which one belongs in your workflow.',
+    href: 'https://sealey.ai/blog/14-ai-dev-frameworks-comparison-2026.html',
+  },
+]
+
+function Insights() {
+  return (
+    <section className="dsr-section" id="insights" style={{ background: 'rgba(0,0,0,0.2)' }}>
+      <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 24px' }}>
+        <div className="dsr-section-label" style={{ textAlign: 'center', marginBottom: 12 }}>INSIGHTS</div>
+        <h2 className="dsr-section-title" style={{ textAlign: 'center', marginBottom: 8 }}>Practitioner Research</h2>
+        <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.45)', fontSize: 14, marginBottom: 48, maxWidth: 520, margin: '0 auto 48px' }}>
+          Written from the field — what we learned building and operating real AI infrastructure.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: 20 }}>
+          {ARTICLES.map(a => (
+            <a
+              key={a.href}
+              href={a.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 10,
+                padding: '20px 22px',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(236,171,35,0.15)',
+                borderRadius: 14,
+                textDecoration: 'none',
+                transition: 'border-color 0.2s, background 0.2s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.45)'
+                ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.07)'
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.15)'
+                ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.04)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 22 }}>{a.emoji}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(236,171,35,0.7)' }}>{a.tag}</span>
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#e8e8e8', lineHeight: 1.4 }}>{a.title}</div>
+              <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', lineHeight: 1.6, margin: 0 }}>{a.desc}</p>
+              <div style={{ fontSize: 11, color: 'rgba(236,171,35,0.6)', marginTop: 4 }}>Read article →</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ── Footer ────────────────────────────────────────────────────────────────
 function Footer() {
   return (
@@ -412,6 +495,7 @@ export default function SalesRoom() {
       <HowItWorks />
       <About />
       <DemoTeaser />
+      <Insights />
       <Footer />
     </div>
   )
