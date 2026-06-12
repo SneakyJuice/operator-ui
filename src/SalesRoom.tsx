@@ -346,6 +346,25 @@ function DemoTeaser() {
 }
 
 // ── Section: Insights ───────────────────────────────────────────────────────
+const INFOGRAPHICS = [
+  {
+    src: '/infographic-platform-landscape.jpg',
+    alt: 'AI Agent Platform Landscape 2026',
+    tag: 'PLATFORM LANDSCAPE',
+    title: 'AI Agent Platforms — 2026 Landscape',
+    desc: 'OpenClaw, NemoClaw (NVIDIA), Gemini Spark (Google), Perplexity Computer, Microsoft Scout, and Meta Hatch — mapped and compared.',
+    href: 'https://sealey.ai/blog/13-ai-agent-platform-landscape-2026.html',
+  },
+  {
+    src: '/infographic-bmad-frameworks.png',
+    alt: 'AI Dev Frameworks Capability Map',
+    tag: 'DEV FRAMEWORKS',
+    title: 'AI Dev Frameworks — Capability Map',
+    desc: 'BMAD vs Claude Code vs Codex vs Cursor — side-by-side on model agnostic, sub-agents, memory, routing, and enterprise SSO.',
+    href: 'https://sealey.ai/blog/14-ai-dev-frameworks-comparison-2026.html',
+  },
+]
+
 const ARTICLES = [
   {
     emoji: '🔄',
@@ -386,6 +405,40 @@ function Insights() {
         <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.45)', fontSize: 14, marginBottom: 48, maxWidth: 520, margin: '0 auto 48px' }}>
           Written from the field — what we learned building and operating real AI infrastructure.
         </p>
+
+        {/* Infographics */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: 20, marginBottom: 20 }}>
+          {INFOGRAPHICS.map(ig => (
+            <a
+              key={ig.href}
+              href={ig.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 12,
+                border: '1px solid rgba(236,171,35,0.2)',
+                borderRadius: 14,
+                overflow: 'hidden',
+                textDecoration: 'none',
+                transition: 'border-color 0.2s',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.55)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.2)' }}
+            >
+              <img src={ig.src} alt={ig.alt} style={{ width: '100%', display: 'block', borderRadius: '14px 14px 0 0' }} />
+              <div style={{ padding: '12px 16px 16px' }}>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(236,171,35,0.7)', marginBottom: 6 }}>{ig.tag} · INFOGRAPHIC</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#e8e8e8', lineHeight: 1.4, marginBottom: 4 }}>{ig.title}</div>
+                <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', lineHeight: 1.5, margin: '0 0 8px' }}>{ig.desc}</p>
+                <div style={{ fontSize: 11, color: 'rgba(236,171,35,0.6)' }}>Read full breakdown →</div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* Articles */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: 20 }}>
           {ARTICLES.map(a => (
             <a
