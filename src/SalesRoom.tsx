@@ -406,6 +406,49 @@ function Insights() {
           Written from the field - what we learned building and operating real AI infrastructure.
         </p>
 
+        {/* Featured Artifact - Self-Improvement Lifecycle Deck */}
+        <a
+          href="/self-improvement-lifecycle.pptx"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'stretch',
+            gap: 24,
+            marginBottom: 20,
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(236,171,35,0.28)',
+            borderRadius: 16,
+            overflow: 'hidden',
+            textDecoration: 'none',
+            transition: 'border-color 0.2s, background 0.2s',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.6)'
+            ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.08)'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(236,171,35,0.28)'
+            ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.05)'
+          }}
+        >
+          <img
+            src="/self-improvement-thumbnail.jpg"
+            alt="The Agentic Self-Improvement Lifecycle"
+            style={{ width: 280, objectFit: 'cover', flexShrink: 0, borderRight: '1px solid rgba(236,171,35,0.15)' }}
+          />
+          <div style={{ padding: '22px 26px 22px 2px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(236,171,35,0.75)', marginBottom: 8 }}>FEATURED ARTIFACT · DECK</div>
+            <div style={{ fontSize: 17, fontWeight: 600, color: '#111111', lineHeight: 1.35, marginBottom: 8 }}>
+              The Agentic Self-Improvement Lifecycle
+            </div>
+            <p style={{ fontSize: 13, color: '#555555', lineHeight: 1.55, margin: '0 0 12px' }}>
+              How autonomous AI systems learn from their own runs — turning every execution into a lesson the next run inherits. A model-agnostic look at the Run → Debrief → Mine → Reflect → Patch loop, the two arms of reflection, and why prevention beats diagnosis.
+            </p>
+            <div style={{ fontSize: 12, color: 'rgba(236,171,35,0.65)' }}>Download the deck (PPTX) ↓</div>
+          </div>
+        </a>
+
         {/* Infographics */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(380px, 100%), 1fr))', gap: 20, marginBottom: 20 }}>
           {INFOGRAPHICS.map(ig => (
