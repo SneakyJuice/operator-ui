@@ -412,9 +412,7 @@ function Insights() {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            display: 'flex',
-            alignItems: 'stretch',
-            gap: 24,
+            display: 'block',
             marginBottom: 20,
             background: 'rgba(255,255,255,0.05)',
             border: '1px solid rgba(236,171,35,0.28)',
@@ -432,12 +430,14 @@ function Insights() {
             ;(e.currentTarget as HTMLAnchorElement).style.background = 'rgba(255,255,255,0.05)'
           }}
         >
-          <img
-            src="/self-improvement-thumbnail.jpg"
-            alt="The Agentic Self-Improvement Lifecycle"
-            style={{ width: 280, objectFit: 'cover', flexShrink: 0, borderRight: '1px solid rgba(236,171,35,0.15)' }}
-          />
-          <div style={{ padding: '22px 26px 22px 2px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ background: '#0B1F3A', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 0 }}>
+            <img
+              src="/self-improvement-thumbnail.jpg"
+              alt="The Agentic Self-Improvement Lifecycle"
+              style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }}
+            />
+          </div>
+          <div style={{ padding: '18px 22px 20px' }}>
             <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: 'rgba(236,171,35,0.75)', marginBottom: 8 }}>FEATURED ARTIFACT · DECK</div>
             <div style={{ fontSize: 17, fontWeight: 600, color: '#111111', lineHeight: 1.35, marginBottom: 8 }}>
               The Agentic Self-Improvement Lifecycle
